@@ -207,8 +207,7 @@ class ApiProvider {
     return null;
   }
 
-
-  Future update_profile(String name , String email ,String password , String phone ) async {
+  Future update_password(String new_password , String old_password ) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
       key: 'token',
@@ -217,9 +216,49 @@ class ApiProvider {
       key: 'id',
     );
 
-    dynamic url =  Uri.parse('${CAT_WITH_PRODUCTS}');
+    dynamic url =  Uri.parse('${UPDATE_PASSWORD}');
     if(user_id != null){
-      Uri.parse('${ADD_TO_CART}?user_id='+user_id!);
+      url =    Uri.parse('${UPDATE_PASSWORD}?user_id='+user_id!);
+    }
+    final http.Response response = await http.post(
+      url,
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+      body: {
+        'old_password': old_password,
+        'new_password': new_password,
+
+
+      },
+    );
+    print(json.decode(response.body));
+    return json.decode(response.body);
+
+    // if (response.statusCode == 200) {
+    //   final data = json.decode(response.body);
+    //   if (data['status'] == true) {
+    //     return data;
+    //   }
+    //   return null;
+    // }
+    // return null;
+  }
+
+  Future update_profile(String name , String email , String phone ) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+
+    dynamic url =  Uri.parse('${UPDATE_PROFILE}');
+    if(user_id != null){
+   url =    Uri.parse('${UPDATE_PROFILE}?user_id='+user_id!);
     }
     final http.Response response = await http.post(
       url,
@@ -231,11 +270,11 @@ class ApiProvider {
       body: {
         'name': name,
         'email': email,
-        'password': password,
-        'phone': phone,
+        'mobile': phone,
 
       },
     );
+    print(json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -512,27 +551,33 @@ class ApiProvider {
   //   return book;
   // }
   //
-  Future<bool> user() async {
+  Future<dynamic> user() async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
-      key: 'api_token',
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
     );
     try {
       final http.Response response = await http.get(
-        Uri.parse(USER_API + '?api_token=' + api_token!),
+        Uri.parse(USER_API +'?user_id='+user_id!),
         headers: <String, String>{
           'Accept': 'application/json; charset=UTF-8',
-          'Access-Control-Allow-Origin': '*'
+          'Access-Control-Allow-Origin': '*',
+          'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
         },
       );
       if (response.statusCode == 200) {
-        return true;
+        return json.decode(response.body);
       }
     } catch (e) {
-      return false;
+      print(e);
+      return null;
     }
 
-    return false;
+    return null;
   }
 
   Future getName() async {

@@ -13,6 +13,7 @@ import '../models/meals_list_data.dart';
 import '../models/tabIcon_data.dart';
 import '../ui_view/title_view.dart';
 import 'meals_list_view.dart';
+import 'notifications.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -192,8 +193,10 @@ ApiProvider _api = new ApiProvider();
             ),
             GestureDetector(
               onTap: () async {
-                Scaffold.of(context).openDrawer();
-              },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Notifications()),
+                );              },
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child:
