@@ -123,7 +123,7 @@ class ApiProvider {
       );
       dynamic url =  Uri.parse('${GET_FAVORITES}');
       if(user_id != null){
-        Uri.parse('${GET_FAVORITES}?user_id='+user_id!);
+     url =    Uri.parse('${GET_FAVORITES}?user_id='+user_id!);
       }
     final http.Response response = await http.get(
     url,
@@ -133,6 +133,7 @@ class ApiProvider {
         'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
       },
     );
+      print(json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {

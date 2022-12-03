@@ -76,7 +76,7 @@ class _FavoritesState extends State<Favorites> with TickerProviderStateMixin {
 
             GestureDetector(
               onTap: () async {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context,true);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -89,78 +89,82 @@ class _FavoritesState extends State<Favorites> with TickerProviderStateMixin {
         drawer: DrawerWidget(),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            //to give space fsrom top
-            SizedBox(
-              height: 10,
-            ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              //to give space fsrom top
+              SizedBox(
+                height: 10,
+              ),
 
-            //page content here
-            FutureBuilder(
-                future: _api.get_user_favorite(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    dynamic data = snapshot.data;
-                    int i = 0;
-                    return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Wrap(
-                            spacing: 2,
-                            runSpacing: 2,
-                            children: data['products'].map<Widget>((e) {
-                              final Animation<double> animation =
-                              Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                      parent: widget.animationController!,
-                                      curve: Interval((1 / 9) * i, 1.0,
-                                          curve: Curves.fastOutSlowIn)));i++;
+              //page content here
+              FutureBuilder(
+                  future: _api.get_user_favorite(),
+                  builder: (context, snapshot) {
+                    print(snapshot.data);
 
-                              return GestureDetector(
-                                onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductDetails(
-                                          animationController: widget.animationController,
-                                          id: e["id"].toString(),
-                                        )),
-                                  );
-                                },
-                                child: MealsView(
-                                  animationController: widget.animationController,
-                                  animation: animation,
-                                  mealsListData: MealsListData(
+                    if (snapshot.hasData) {
+                      dynamic data = snapshot.data;
+                      int i = 0;
+                      return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              spacing: 2,
+                              runSpacing: 2,
+                              children: data['products'].map<Widget>((e) {
+                                final Animation<double> animation =
+                                Tween<double>(begin: 0.0, end: 1.0).animate(
+                                    CurvedAnimation(
+                                        parent: widget.animationController!,
+                                        curve: Interval((1 / 9) * i, 1.0,
+                                            curve: Curves.fastOutSlowIn)));i++;
 
-                                      imagePath: e['image_url'],
-                                      titleTxt: e['name'],
-                                      kacl: e['price'],
-                                      short_desc: e['available_weights'].toString(),
-                                      startColor: '#FFFFFF',
-                                      endColor: '#FFFFFF',
-                                      isFav: e['in_favorite'].toString(),
-                                      id: e['id'].toString()),
-                                ),
-                              );
-                            }).toList(),
+                                return GestureDetector(
+                                  onTap: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetails(
+                                            animationController: widget.animationController,
+                                            id: e["id"].toString(),
+                                          )),
+                                    );
+                                  },
+                                  child: MealsView(
+                                    animationController: widget.animationController,
+                                    animation: animation,
+                                    mealsListData: MealsListData(
+
+                                        imagePath: e['image_url'],
+                                        titleTxt: e['name'],
+                                        kacl: e['price'],
+                                        short_desc: e['available_weights'].toString(),
+                                        startColor: '#FFFFFF',
+                                        endColor: '#FFFFFF',
+                                        isFav: e['in_favorite'].toString(),
+                                        id: e['id'].toString()),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ));
+                    } else {
+                      return Center(
+                        child: Center(child: Text('المفضلة فارغة',style: GoogleFonts.getFont(
+                          AppTheme.fontName,
+                          textStyle: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: AppTheme.green,
                           ),
-                        ));
-                  } else {
-                    return Center(
-                      child: Center(child: Text('المفضلة فارغة',style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                          color: AppTheme.green,
-                        ),
-                      ),),),
-                    );
-                  }
-                }),
-          ],
+                        ),),),
+                      );
+                    }
+                  }),
+            ],
+          ),
         ),
       ),
     );

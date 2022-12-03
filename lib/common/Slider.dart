@@ -31,7 +31,7 @@ final  List<Ad> ads ;
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     image: DecorationImage(image: NetworkImage("https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
-                        fit: BoxFit.cover),
+                        fit: BoxFit.fill),
                     color: Colors.amber,borderRadius: BorderRadius.circular(15.0),
                   ),
 

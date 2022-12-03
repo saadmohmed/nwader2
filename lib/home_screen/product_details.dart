@@ -143,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                   'الوزن ${element['weight'].toString()}  ${element['weight_to'].toString()}  كيلو'),
                             ),
                             SizedBox(
-                              width: 80,
+                              width: MediaQuery.of(context).size.width /7,
                             ),
                             Text(
                                 style: GoogleFonts.getFont(
@@ -323,7 +323,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                   ),
                                 ),
                               ),
-                              Positioned(
+                              data['has_variants'] == 1 ?  Positioned(
                                   top: 360,
                                   left: 10,
                                   right: 10,
@@ -369,7 +369,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                         ),
                                       ),
                                     ),
-                                  )),
+                                  )) : SizedBox(),
                               // Positioned(
                               //   top: 420,
                               //   right: 10,
@@ -708,7 +708,7 @@ class ProductSlider extends StatelessWidget {
                       image: DecorationImage(
                           image: NetworkImage(
                               "https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
-                          fit: BoxFit.cover),
+                          fit: BoxFit.fill),
                       color: Colors.amber,
                       borderRadius: BorderRadius.circular(15.0),
                     ),
