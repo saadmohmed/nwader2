@@ -4,6 +4,7 @@ import 'package:nwader/Services/ApiManager.dart';
 import 'package:nwader/auth_screen/Login.dart';
 import 'package:nwader/home_screen/categories.dart';
 import 'package:nwader/home_screen/home_screen.dart';
+import 'package:nwader/profile/profile.dart';
 
 import '../../main.dart';
 import '../app_theme.dart';
@@ -251,6 +252,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
   void setAnimation() {
     widget.tabIconData?.animationController?.forward();
   }
+  ApiProvider _api = new ApiProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +264,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
           focusColor: Colors.transparent,
           highlightColor: Colors.transparent,
           hoverColor: Colors.transparent,
-          onTap: () {
+          onTap: ()async {
             if(widget.tabIconData?.index == 3){
               if (!widget.tabIconData!.isSelected) {
                 setAnimation();
@@ -282,6 +284,23 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                 MaterialPageRoute(
                     builder: (context) => Categories(animationController:widget.tabIconData?.animationController,)),
               );
+            }
+
+            if(widget.tabIconData?.index == 0){
+                dynamic check_auth =await _api.getName();
+                if(check_auth != null){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Profile()),
+                  );
+                }else{
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+
+                }
+
             }
 
           },

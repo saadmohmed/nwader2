@@ -520,7 +520,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                           color: AppTheme.green,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Row(
                             children: [
                               Image.asset('assets/icons/truck.png'),
@@ -540,7 +540,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width / 2.3,
+                                width: MediaQuery.of(context).size.width / 2.4,
                               ),
                               address_opacity == 1 ? arrow_down : arrow_up
                             ],

@@ -118,7 +118,7 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
 
             GestureDetector(
               onTap: () async {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context,true);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
