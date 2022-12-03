@@ -193,10 +193,10 @@ ApiProvider _api = new ApiProvider();
             ),
             GestureDetector(
               onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Notifications()),
-                );              },
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Notifications()),
+                // );              },
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child:
