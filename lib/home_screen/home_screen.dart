@@ -196,7 +196,8 @@ ApiProvider _api = new ApiProvider();
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => Notifications()),
-                // );              },
+                // );
+                },
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child:
