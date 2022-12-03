@@ -78,8 +78,9 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    runAlignment: WrapAlignment.spaceBetween,
                     spacing: 2,
-                    runSpacing: 2,
                     children: data.map((e) {
                       final Animation<double> animation =
                           Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -106,41 +107,44 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
                                     )),
                               );
                             },
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: 120,
-                                width: 150,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: AppTheme.green,
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Image.network(
-                                      '${e["image_url"]}',
-                                      width: 70,
-                                      height: 70,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  height: 120,
+                                  width: 150,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      width: 2,
+                                      color: AppTheme.green,
                                     ),
-                                    Text(
-                                      '${e["name"]}',
-                                      style: GoogleFonts.getFont(
-                                        AppTheme.fontName,
-                                        textStyle: TextStyle(
-                                          fontFamily: AppTheme.fontName,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12,
-                                          color: AppTheme.green,
-                                        ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        '${e["image_url"]}',
+                                        width: 60,
+                                        height: 60,
                                       ),
-                                    )
-                                  ],
-                                )),
+                                      Text(
+                                        '${e["name"]}',
+                                        style: GoogleFonts.getFont(
+                                          AppTheme.fontName,
+                                          textStyle: TextStyle(
+                                            fontFamily: AppTheme.fontName,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 15,
+                                            color: AppTheme.green,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
                           ),
                         ),
                       );
@@ -166,6 +170,7 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
       child: Scaffold(
         key:_key,
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text('الأقسام' ,    style: GoogleFonts.getFont(
@@ -191,7 +196,7 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
 
             GestureDetector(
               onTap: () async {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context,true);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -242,96 +247,4 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
     );
   }
 
-  Widget getAppBarUI() {
-    return Column(
-      children: <Widget>[
-        AnimatedBuilder(
-          animation: widget.animationController!,
-          builder: (BuildContext context, Widget? child) {
-            return FadeTransition(
-              opacity: topBarAnimation!,
-              child: Transform(
-                transform: Matrix4.translationValues(
-                    0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppTheme.white.withOpacity(topBarOpacity),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(32.0),
-                    ),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
-                          offset: const Offset(1.1, 1.1),
-                          blurRadius: 10.0),
-                    ],
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 16,
-                            right: 0,
-                            top: 16 - 8.0 * topBarOpacity,
-                            bottom: 12 - 8.0 * topBarOpacity),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () async {
-                                Scaffold.of(context).openDrawer();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child:
-                                    Image.asset('assets/icons/menu-icon.png'),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 90,
-                            ),
-                            SizedBox(
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: Text(
-                                  'الأقسام',
-                                  style: GoogleFonts.getFont(
-                                    AppTheme.fontName,
-                                    textStyle: TextStyle(
-                                      fontFamily: AppTheme.fontName,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                      color: AppTheme.green,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 90,
-                            ),
-                            SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: Icon(Icons.arrow_forward_sharp),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        )
-      ],
-    );
-  }
 }

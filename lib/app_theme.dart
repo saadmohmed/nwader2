@@ -11,7 +11,7 @@ class AppTheme {
   // #279D55
   // #F34D06
   // #1E1E1E
-  static const Color background = Color(0xFFF2F3F8);
+  static const Color background = Color(0xFFFFFFFF);
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
   static const Color background_c = Color(0xFFE3F2E9);
 

@@ -49,19 +49,48 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 Align(
                   alignment: Alignment.topRight,
-                  child: Text(
-                    'مرحبا بك ...',
-                    style: GoogleFonts.getFont(
-                      AppTheme.fontName,
-                      textStyle: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        letterSpacing: 0.5,
-                        color: AppTheme.white,
-                      ),
-                    ),
-                  ),
+                  child:FutureBuilder<dynamic>(
+                    future: _apiProvider.getName(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return   GestureDetector(
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()),
+                            );
+                          },
+                          child: SizedBox(),
+                        );
+                      } else {
+                        return GestureDetector(
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Profile()),
+                            );
+                          },
+                          child:       Text(
+                            'مرحبا بك ...',
+                            style: GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                                letterSpacing: 0.5,
+                                color: AppTheme.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  )
+
+
+           ,
                 ),
                 SizedBox(
                   height: 15,
@@ -82,8 +111,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             },
                             child: Row(
                               children: [
+                                Image.asset('assets/icons/user-icon.png'),
                                 SizedBox(
-                                  width: 20,
+                                  width: 10,
                                 ),
                                 Text(
                                   'تسجيل الدخول',
@@ -271,8 +301,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         },
                         child: Row(
                           children: [
+                            Image.asset('assets/icons/user-icon.png'),
                             SizedBox(
-                              width: 20,
+                              width: 10,
                             ),
                             Text(
                               'تسجيل الدخول',
@@ -331,8 +362,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           },
                           child: Row(
                             children: [
+                              Image.asset('assets/icons/user-icon.png'),
                               SizedBox(
-                                width: 20,
+                                width: 10,
                               ),
                               Text(
                                 'تسجيل الدخول',
@@ -354,6 +386,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     }
                   },
                 ),
+                SizedBox( height:20) ,
                 Padding(
                   padding: const EdgeInsets.only(right: 30.0, top: 30),
                   child: Center(
@@ -366,6 +399,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               const BorderRadius.all(Radius.circular(32.0)),
                           onTap: () {},
                           child: Container(
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: AppTheme.orange,
                               borderRadius:
@@ -388,6 +423,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               const BorderRadius.all(Radius.circular(32.0)),
                           onTap: () {},
                           child: Container(
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: AppTheme.orange,
                               borderRadius:
@@ -410,6 +447,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               const BorderRadius.all(Radius.circular(32.0)),
                           onTap: () {},
                           child: Container(
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: AppTheme.orange,
                               borderRadius:
@@ -432,6 +471,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               const BorderRadius.all(Radius.circular(32.0)),
                           onTap: () {},
                           child: Container(
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: AppTheme.orange,
                               borderRadius:
@@ -449,7 +490,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Center(
                   child: Text(
@@ -460,7 +501,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       textStyle: TextStyle(
                         fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w700,
-                        fontSize: 15,
+                        fontSize: 13,
                         letterSpacing: 0.5,
                         color: AppTheme.white.withOpacity(0.6),
                       ),

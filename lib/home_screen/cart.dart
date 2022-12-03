@@ -380,7 +380,9 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
       color: AppTheme.background,
       child: Scaffold(
         key:_key,
+
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text('سلة المشتريات' ,    style: GoogleFonts.getFont(

@@ -91,6 +91,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       child: Scaffold(
         key: _key,
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text(

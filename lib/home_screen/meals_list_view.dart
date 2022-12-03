@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nwader/Services/ApiManager.dart';
+import 'package:nwader/auth_screen/Login.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../app_theme.dart';
 import '../models/meals_list_data.dart';
@@ -237,6 +238,14 @@ favorite = widget.mealsListData!.isFav;
                     left: 15,
                     child: GestureDetector(
                       onTap: ()async{
+                        dynamic token = await _api.get_token();
+                        if(token == null){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login()),
+                          );
+                        }
                         dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
                         if(data['status'] == true){
 
@@ -279,6 +288,14 @@ favorite = widget.mealsListData!.isFav;
                     left: 15,
                     child: GestureDetector(
                       onTap: ()async{
+                        dynamic token = await _api.get_token();
+                        if(token == null){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login()),
+                          );
+                        }
                         dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
                         if(data['status'] == true){
 

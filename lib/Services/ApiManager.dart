@@ -542,6 +542,14 @@ class ApiProvider {
     );
     return name;
   }
+  Future get_token() async {
+    final storage = new FlutterSecureStorage();
+    final token = await storage.read(
+      key: 'token',
+    );
+    return token;
+  }
+
 
 
   Future getUserAddress() async {

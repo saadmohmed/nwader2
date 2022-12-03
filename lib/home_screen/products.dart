@@ -45,18 +45,56 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
   bool alive = false;
   bool covered = false;
   bool without_c = false;
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+        key: _key,
         drawer: DrawerWidget(),
+        appBar: AppBar(
+          backgroundColor: AppTheme.white,
+          centerTitle: true,
+          title: Text(widget.name.toString() ,    style: GoogleFonts.getFont(
+            AppTheme.fontName,
+            textStyle: TextStyle(
+              fontFamily: AppTheme.fontName,
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+              color: AppTheme.green,
+            ),
+          ), ),
+          leading:   GestureDetector(
+            onTap: () async {
+              _key.currentState!.openDrawer();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child:
+              Image.asset('assets/icons/menu-icon.png'),
+            ),
+          ),
+          actions: [
+
+            GestureDetector(
+              onTap: () async {
+                Navigator.pop(context,true);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.arrow_forward_sharp  , color: AppTheme.green,),
+              ),
+            ),
+          ],
+        ),
+
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Column(
           children: [
             //to give space fsrom top
-            getAppBarUI(),
+            // getAppBarUI(),
             SizedBox(
               height: 10,
             ),

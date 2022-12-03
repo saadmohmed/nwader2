@@ -92,6 +92,7 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
       child: Scaffold(
         key: _key,
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text('تأكيد الطلب' ,    style: GoogleFonts.getFont(

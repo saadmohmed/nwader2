@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nwader/auth_screen/Login.dart';
 import 'package:quantity_input/quantity_input.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Services/ApiManager.dart';
@@ -50,13 +51,50 @@ class _ProductDetailsState extends State<ProductDetails>
     return Container(
       child: Scaffold(
         key:_key,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: AppTheme.white,
+          centerTitle: true,
+          title: Text('' ,    style: GoogleFonts.getFont(
+            AppTheme.fontName,
+            textStyle: TextStyle(
+              fontFamily: AppTheme.fontName,
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+              color: AppTheme.green,
+            ),
+          ), ),
+          leading:   GestureDetector(
+            onTap: () async {
+              _key.currentState!.openDrawer();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child:
+              Image.asset('assets/icons/menu-icon.png'),
+            ),
+          ),
+          actions: [
+
+            GestureDetector(
+              onTap: () async {
+                Navigator.pop(context,true);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.arrow_forward_sharp  , color: AppTheme.green,),
+              ),
+            ),
+          ],
+        ),
+
         drawer: DrawerWidget(),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Column(
           children: [
             //to give space from top
-            getAppBarUI(),
+            // getAppBarUI(),
             SizedBox(
               height: 10,
             ),
@@ -105,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                   'الوزن ${element['weight'].toString()}  ${element['weight_to'].toString()}  كيلو'),
                             ),
                             SizedBox(
-                              width: 90,
+                              width: 80,
                             ),
                             Text(
                                 style: GoogleFonts.getFont(
@@ -136,6 +174,8 @@ class _ProductDetailsState extends State<ProductDetails>
                         ),
                         child: SingleChildScrollView(
                           child: Stack(
+                            alignment: Alignment.center,
+
                             children: [
                               Container(
                                 height: 720,
@@ -164,7 +204,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                         ),
                                       ),
                                       SizedBox(
-                                        width: 90,
+                                        width: MediaQuery.of(context).size.width /6,
                                       ),
                                       Text(
                                         data['price'].toString() + ' ر.س',
@@ -181,7 +221,6 @@ class _ProductDetailsState extends State<ProductDetails>
                                     ],
                                   )),
                               Positioned(
-                                  left: 10,
                                   top: 260,
                                   child: Row(
                                     children: [
@@ -197,7 +236,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                   fontFamily: AppTheme.fontName,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 16,
-                                                  color: AppTheme.green,
+                                                  color: AppTheme.darkerText,
                                                 ),
                                               ),
                                             ),
@@ -212,10 +251,9 @@ class _ProductDetailsState extends State<ProductDetails>
                                               })
                                         ],
                                       ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Center(
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:8.0,left:8.0),
                                         child: Container(
                                           child: Row(
                                             children: [
@@ -228,7 +266,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                         AppTheme.fontName,
                                                     fontWeight: FontWeight.w700,
                                                     fontSize: 16,
-                                                    color: AppTheme.green,
+                                                    color: AppTheme.darkerText,
                                                   ),
                                                 ),
                                               ),
@@ -258,7 +296,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                         AppTheme.fontName,
                                                     fontWeight: FontWeight.w700,
                                                     fontSize: 16,
-                                                    color: AppTheme.green,
+                                                    color: AppTheme.darkerText,
                                                   ),
                                                 ),
                                               ),
@@ -280,7 +318,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                       fontFamily: AppTheme.fontName,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 20,
-                                      color: AppTheme.green,
+                                      color: AppTheme.darkerText,
                                     ),
                                   ),
                                 ),
@@ -397,129 +435,134 @@ class _ProductDetailsState extends State<ProductDetails>
                               //       ),
                               //     )),
                               Positioned(
-                                  left: 10,
+                                  // left: 1?0,
                                   top: 520,
-                                  right: 80,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'بدون تغليف ',
-                                              style: GoogleFonts.getFont(
-                                                AppTheme.fontName,
-                                                textStyle: TextStyle(
-                                                  fontFamily: AppTheme.fontName,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppTheme.green,
-                                                ),
-                                              ),
+                                  // right: 10,
+                                  child: Container(
+
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'بدون تغليف ',
+                                          style: GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppTheme.darkerText,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: FlutterSwitch(
-                                                width: 80,
-                                                height: 40,
-                                                toggleSize: 45,
-                                                inactiveColor: AppTheme.grey,
-                                                activeColor: AppTheme.orange,
-                                                value: covered,
-                                                onToggle: (bool value) {
-                                                  setState(() {
-                                                    covered = value;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                            Text(
-                                              'مع تغليف',
-                                              style: GoogleFonts.getFont(
-                                                AppTheme.fontName,
-                                                textStyle: TextStyle(
-                                                  fontFamily: AppTheme.fontName,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppTheme.green,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      )
-                                    ],
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.all(8.0),
+                                          child: FlutterSwitch(
+                                            width: 80,
+                                            height: 40,
+                                            toggleSize: 45,
+                                            inactiveColor: AppTheme.grey,
+                                            activeColor: AppTheme.orange,
+                                            value: covered,
+                                            onToggle: (bool value) {
+                                              setState(() {
+                                                covered = value;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Text(
+                                          'مع تغليف',
+                                          style: GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppTheme.darkerText,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )),
                               Positioned(
-                                  left: 10,
+                                  // left: 10,
                                   top: 570,
-                                  right: 100,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              '    مسلوخ',
-                                              style: GoogleFonts.getFont(
-                                                AppTheme.fontName,
-                                                textStyle: TextStyle(
-                                                  fontFamily: AppTheme.fontName,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppTheme.green,
-                                                ),
-                                              ),
+                                  // right: 100,
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '    مسلوخ',
+                                          style: GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppTheme.darkerText,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: FlutterSwitch(
-                                                width: 80,
-                                                height: 40,
-                                                toggleSize: 45,
-                                                inactiveColor: AppTheme.grey,
-                                                activeColor: AppTheme.orange,
-                                                value: without_c,
-                                                onToggle: (bool value) {
-                                                  setState(() {
-                                                    without_c = value;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                            Text(
-                                              'مشلوط',
-                                              style: GoogleFonts.getFont(
-                                                AppTheme.fontName,
-                                                textStyle: TextStyle(
-                                                  fontFamily: AppTheme.fontName,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppTheme.green,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      )
-                                    ],
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.all(8.0),
+                                          child: FlutterSwitch(
+                                            width: 80,
+                                            height: 40,
+                                            toggleSize: 45,
+                                            inactiveColor: AppTheme.grey,
+                                            activeColor: AppTheme.orange,
+                                            value: without_c,
+                                            onToggle: (bool value) {
+                                              setState(() {
+                                                without_c = value;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Text(
+                                          'مشلوط',
+                                          style: GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppTheme.darkerText,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )),
 
                           Positioned(
-                                    top: 650,
+                                    top: 660,
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
                                       height: 60,
                                       decoration: const BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.all(Radius.circular(50)),
+                                            BorderRadius.all(Radius.circular(2)),
                                         color: AppTheme.green,
                                       ),
                                       child: Center(
                                         child:        GestureDetector(
                                           onTap: ()async{
+                                            dynamic token = await _api.get_token();
+                                            if(token == null){
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Login()),
+                                              );
+                                            }
                                             dynamic p = await _api.add_to_cart(data["id"].toString());
                                             if(p['status'] == true){
 
@@ -656,24 +699,27 @@ class ProductSlider extends StatelessWidget {
         items: ads.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 10.0),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            "https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
-                        fit: BoxFit.cover),
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset("assets/icons/wish-red-icon.png"),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
+                          fit: BoxFit.cover),
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                  ));
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset("assets/icons/wish-red-icon.png"),
+                      ),
+                    )),
+              );
             },
           );
         }).toList());

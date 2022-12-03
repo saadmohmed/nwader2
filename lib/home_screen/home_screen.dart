@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             return Center(child: CircularProgressIndicator());
           }
         }));
-
+listViews.add(SizedBox(height: 40,));
     listViews.add(FutureBuilder(
         future: _api.cat_wtith_products(),
         builder: (context, snapshot) {
@@ -89,28 +89,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   data.length,
                   (index) => Column(
                         children: [
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Products(
-                                      name: data[index]['cat']['name'].toString(),
-                                      animationController: animationController,
-                                      id: data[index]['cat']['id'].toString()
-                                    )),
-                              );
-                            },
-                            child: TitleView(
-                              titleTxt: '${data[index]['cat']['name']}',
-                              subTxt: 'عرض الكل',
-                              animation: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Interval((1 / count) * 2, 1.0,
-                                          curve: Curves.fastOutSlowIn))),
-                              animationController: animationController!,
-                            ),
+                          TitleView(
+                            id :      data[index]['cat']['id'] ,
+                            titleTxt: '${data[index]['cat']['name']}',
+                            subTxt: 'عرض الكل',
+                            animation: Tween<double>(begin: 0.0, end: 1.0)
+                                .animate(CurvedAnimation(
+                                    parent: animationController!,
+                                    curve: Interval((1 / count) * 2, 1.0,
+                                        curve: Curves.fastOutSlowIn))),
+                            animationController: animationController!,
                           ),
                           MealsListView(
                             mealslist: List.generate(
@@ -164,6 +152,7 @@ ApiProvider _api = new ApiProvider();
       child: Scaffold(
         key:_key,
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text('' , ),
