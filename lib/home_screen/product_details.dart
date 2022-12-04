@@ -103,10 +103,13 @@ class _ProductDetailsState extends State<ProductDetails>
             FutureBuilder(
                 future: _api.getProductData(widget.id),
                 builder: (context, snapshot) {
+                  print(snapshot.data);
                   if (snapshot.hasData) {
                     dynamic data = snapshot.data;
                     List<Ad> ads = [];
                     List<DropItem> countryList = [];
+                    List<DropItem> cuts = [];
+
                     if (data['def_images'] != null) {
                       data["def_images"].forEach((element) {
                         ads.add(Ad(
@@ -123,6 +126,112 @@ class _ProductDetailsState extends State<ProductDetails>
                     // item: Row(
                     //   children: [Text('asdasds')],
                     // ))
+                    cuts.add(DropItem(
+                      key:'1',
+                      item: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                style: GoogleFonts.getFont(
+                                  AppTheme.fontName,
+                                  textStyle: TextStyle(
+                                    fontFamily: AppTheme.fontName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppTheme.nearlyBlack,
+                                  ),
+                                ),
+                                'ارباع'),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width /7,
+                          ),
+                          Text(
+                              style: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: AppTheme.orange,
+                                ),
+                              ),
+                              '')
+                        ],
+                      ),
+                    ));
+                    cuts.add(DropItem(
+                      key:'3',
+                      item: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                style: GoogleFonts.getFont(
+                                  AppTheme.fontName,
+                                  textStyle: TextStyle(
+                                    fontFamily: AppTheme.fontName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppTheme.nearlyBlack,
+                                  ),
+                                ),
+                                'نصفان'),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width /7,
+                          ),
+                          Text(
+                              style: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: AppTheme.orange,
+                                ),
+                              ),
+                              '')
+                        ],
+                      ),
+                    ));
+                    cuts.add(DropItem(
+                      key:'3',
+                      item: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                style: GoogleFonts.getFont(
+                                  AppTheme.fontName,
+                                  textStyle: TextStyle(
+                                    fontFamily: AppTheme.fontName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppTheme.nearlyBlack,
+                                  ),
+                                ),
+                                'اثلاث'),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width /7,
+                          ),
+                          Text(
+                              style: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: AppTheme.orange,
+                                ),
+                              ),
+                              '')
+                        ],
+                      ),
+                    ));
+
                     data["variants"].forEach((element) {
                       countryList.add(DropItem(
                         key: element["id"].toString(),
@@ -161,6 +270,7 @@ class _ProductDetailsState extends State<ProductDetails>
                       ));
                     });
                     DropItem? _selectedValue = countryList.first;
+                    DropItem? _selectedCut = cuts.first;
 
                     return Expanded(
                       child: Container(
@@ -188,7 +298,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                     ads: ads,
                                   )),
                               Positioned(
-                                  top: 220,
+                                  top: 230,
                                   child: Row(
                                     children: [
                                       Text(
@@ -221,7 +331,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                     ],
                                   )),
                               Positioned(
-                                  top: 260,
+                                  top: 280,
                                   child: Row(
                                     children: [
                                       Row(
@@ -242,6 +352,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                             ),
                                           ),
                                           QuantityInput(
+                                            inputWidth: 40,
                                               value: quantity,
                                               onChanged: (value) {
                                                 setState(() {
@@ -274,7 +385,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: FlutterSwitch(
-                                                  width: 80,
+                                                  width: 70,
                                                   height: 40,
                                                   toggleSize: 45,
                                                   inactiveColor: AppTheme.grey,
@@ -307,7 +418,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                     ],
                                   )),
                               Positioned(
-                                top: 330,
+                                top: 340,
                                 right: 10,
                                 child: Text(
                                   textAlign: TextAlign.left,
@@ -324,7 +435,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                 ),
                               ),
                               data['has_variants'] == 1 ?  Positioned(
-                                  top: 360,
+                                  top: 370,
                                   left: 10,
                                   right: 10,
                                   child: Padding(
@@ -370,73 +481,73 @@ class _ProductDetailsState extends State<ProductDetails>
                                       ),
                                     ),
                                   )) : SizedBox(),
-                              // Positioned(
-                              //   top: 420,
-                              //   right: 10,
-                              //   child: Text(
-                              //     textAlign: TextAlign.left,
-                              //     'اختيار نوع التقطيع',
-                              //     style: GoogleFonts.getFont(
-                              //       AppTheme.fontName,
-                              //       textStyle: TextStyle(
-                              //         fontFamily: AppTheme.fontName,
-                              //         fontWeight: FontWeight.w700,
-                              //         fontSize: 20,
-                              //         color: AppTheme.green,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // Positioned(
-                              //     top: 450,
-                              //     right: 10,
-                              //     left: 10,
-                              //     child: Padding(
-                              //       padding: const EdgeInsets.all(8.0),
-                              //       child: Center(
-                              //         child: Container(
-                              //           width: MediaQuery.of(context)
-                              //               .copyWith()
-                              //               .size
-                              //               .width,
-                              //           decoration: ShapeDecoration(
-                              //             color: AppTheme.white,
-                              //             shape: RoundedRectangleBorder(),
-                              //           ),
-                              //           child: Container(
-                              //             child: DropdownButton<DropItem>(
-                              //               // isDense: true,
-                              //               isExpanded: true,
-                              //               value: _selectedValue,
-                              //               icon:
-                              //                   Icon(Icons.keyboard_arrow_down),
-                              //               iconSize: 30,
-                              //               elevation: 20,
-                              //               style:
-                              //                   TextStyle(color: Colors.black),
-                              //
-                              //               onChanged: (DropItem? newValue) {
-                              //                 setState(() {
-                              //                   _selectedValue = newValue;
-                              //                   print(newValue);
-                              //                 });
-                              //               },
-                              //               items: countryList.map<
-                              //                       DropdownMenuItem<DropItem>>(
-                              //                   (DropItem value) {
-                              //                 return DropdownMenuItem<DropItem>(
-                              //                   value: value,
-                              //                   child: value.item,
-                              //                 );
-                              //               }).toList(),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     )),
+                              Positioned(
+                                top: 440,
+                                right: 10,
+                                child: Text(
+                                  textAlign: TextAlign.left,
+                                  'اختيار نوع التقطيع',
+                                  style: GoogleFonts.getFont(
+                                    AppTheme.fontName,
+                                    textStyle: TextStyle(
+                                      fontFamily: AppTheme.fontName,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                      color: AppTheme.darkerText,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                  top: 470,
+                                  right: 10,
+                                  left: 10,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Container(
+                                        width: MediaQuery.of(context)
+                                            .copyWith()
+                                            .size
+                                            .width,
+                                        decoration: ShapeDecoration(
+                                          color: AppTheme.white,
+                                          shape: RoundedRectangleBorder(),
+                                        ),
+                                        child: Container(
+                                          child: DropdownButton<DropItem>(
+                                            // isDense: true,
+                                            isExpanded: true,
+                                            value: _selectedCut,
+                                            icon:
+                                                Icon(Icons.keyboard_arrow_down),
+                                            iconSize: 30,
+                                            elevation: 20,
+                                            style:
+                                                TextStyle(color: Colors.black),
+
+                                            onChanged: (DropItem? newValue) {
+                                              setState(() {
+                                                _selectedCut = newValue;
+                                                print(newValue?.key);
+                                              });
+                                            },
+                                            items: cuts.map<
+                                                    DropdownMenuItem<DropItem>>(
+                                                (DropItem value) {
+                                              return DropdownMenuItem<DropItem>(
+                                                value: value,
+                                                child: value.item,
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
                               Positioned(
                                   // left: 1?0,
-                                  top: 520,
+                                  top: 540,
                                   // right: 10,
                                   child: Container(
 
@@ -444,15 +555,21 @@ class _ProductDetailsState extends State<ProductDetails>
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          'بدون تغليف ',
-                                          style: GoogleFonts.getFont(
-                                            AppTheme.fontName,
-                                            textStyle: TextStyle(
-                                              fontFamily: AppTheme.fontName,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppTheme.darkerText,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width/4,
+
+                                          child: Text(
+                                            'بدون تغليف ',
+                                            textAlign: TextAlign.right,
+
+                                            style: GoogleFonts.getFont(
+                                              AppTheme.fontName,
+                                              textStyle: TextStyle(
+                                                fontFamily: AppTheme.fontName,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                color: AppTheme.darkerText,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -473,15 +590,20 @@ class _ProductDetailsState extends State<ProductDetails>
                                             },
                                           ),
                                         ),
-                                        Text(
-                                          'مع تغليف',
-                                          style: GoogleFonts.getFont(
-                                            AppTheme.fontName,
-                                            textStyle: TextStyle(
-                                              fontFamily: AppTheme.fontName,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppTheme.darkerText,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width/5,
+                                          child: Text(
+                                            'مع تغليف',
+                                            textAlign: TextAlign.left,
+
+                                            style: GoogleFonts.getFont(
+                                              AppTheme.fontName,
+                                              textStyle: TextStyle(
+                                                fontFamily: AppTheme.fontName,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                color: AppTheme.darkerText,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -490,22 +612,27 @@ class _ProductDetailsState extends State<ProductDetails>
                                   )),
                               Positioned(
                                   // left: 10,
-                                  top: 570,
+                                  top: 590,
                                   // right: 100,
                                   child: Container(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          '    مسلوخ',
-                                          style: GoogleFonts.getFont(
-                                            AppTheme.fontName,
-                                            textStyle: TextStyle(
-                                              fontFamily: AppTheme.fontName,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppTheme.darkerText,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width/5,
+
+                                          child: Text(
+                                            'مسلوخ',
+                                            textAlign: TextAlign.right,
+                                            style: GoogleFonts.getFont(
+                                              AppTheme.fontName,
+                                              textStyle: TextStyle(
+                                                fontFamily: AppTheme.fontName,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                color: AppTheme.darkerText,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -526,15 +653,21 @@ class _ProductDetailsState extends State<ProductDetails>
                                             },
                                           ),
                                         ),
-                                        Text(
-                                          'مشلوط',
-                                          style: GoogleFonts.getFont(
-                                            AppTheme.fontName,
-                                            textStyle: TextStyle(
-                                              fontFamily: AppTheme.fontName,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppTheme.darkerText,
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width/7,
+
+                                          child: Text(
+                                            'مشلوط',
+                                            textAlign: TextAlign.left,
+
+                                            style: GoogleFonts.getFont(
+                                              AppTheme.fontName,
+                                              textStyle: TextStyle(
+                                                fontFamily: AppTheme.fontName,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                color: AppTheme.darkerText,
+                                              ),
                                             ),
                                           ),
                                         ),

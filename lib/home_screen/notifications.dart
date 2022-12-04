@@ -142,119 +142,280 @@ class _NotificationsState extends State<Notifications>
           child: Column(
             children: <Widget>[
               //to give space from top
-              ExpandableNotifier(
-                  child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        color: AppTheme.green,
-                        child: ScrollOnExpand(
-                          scrollOnExpand: true,
-                          scrollOnCollapse: false,
-                          child: ExpandablePanel(
-                            theme: const ExpandableThemeData(
-                              headerAlignment:
-                                  ExpandablePanelHeaderAlignment.center,
-                              tapBodyToCollapse: true,
-                            ),
-                            header: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 40,
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            height: 100,
-                                            // width: MediaQuery.of(context)
-                                            //     .size
-                                            //     .width,
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 5.0),
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.green,
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 10,
-                                            right: 30,
-                                            child: Container(
-                                              height: 200,
-                                              width: 2,
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.white,
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Theme(
 
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 10,
-                                            right: 10,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(50.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Icon(
-                                                  Icons.notifications,
-                                                  color: AppTheme.green,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
+                  child: ExpansionPanelList(
+                    elevation: 0,
+
+                    children: [
+                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
+                        return Container(
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                            color: AppTheme.green,
+                          ),
+                          child: Row(children: [
+                            Stack(
+                              children: [
+                                Container(
+                                height:90,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                  color: AppTheme.green,
                                 )),
-                            collapsed: Text(
-                              'sssssssssssssssddddddddddddddddddddddds',
-                              softWrap: true,
-                              maxLines: 2,
-                              textDirection: TextDirection.rtl,
-                              // overflow: TextOverflow.ellipsis,
-                            ),
-                            expanded: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                for (var _ in Iterable.generate(5))
-                                  Padding(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        'asdasdsad',
-                                        softWrap: true,
-                                        overflow: TextOverflow.fade,
+                                Positioned(
+                                  top: 2,
+                                  right: 22,
+                                  child: Container(
+                                      height:120,
+                                      width:3,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        color: AppTheme.white,
                                       )),
+                                ),
+
+                                Positioned(
+                                  top: 20,
+                                  right: 10,
+                                  child: Container(    decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                    color: AppTheme.redAcc,
+                                  ),child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(Icons.notifications , color: AppTheme.green,),
+                                  )),
+                                ),
                               ],
                             ),
-                            builder: (_, collapsed, expanded) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, bottom: 10),
-                                child: Expandable(
-                                  collapsed: collapsed,
-                                  expanded: expanded,
-                                  theme: const ExpandableThemeData(
-                                      crossFadePoint: 0),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                            SizedBox(width: 9,) ,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text("لقد تم قبول طلبك رقم 7676"),
+                                  Text("12/98/2022     98:98 am"),
+
+                                ],
+                              ),
+                            ),
+
+                          ],),
+                        );
+                      }, body: Text("asdasdasdsadasdasdsd")  , isExpanded: true)
                     ],
                   ),
                 ),
-              ))
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Theme(
+
+                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
+                  child: ExpansionPanelList(
+                    elevation: 0,
+                    children: [
+                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
+                        return Container(
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                            color: AppTheme.green,
+                          ),
+                          child: Row(children: [
+                            Stack(
+                              children: [
+                                Container(
+                                    height:90,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      color: AppTheme.green,
+                                    )),
+                                Positioned(
+                                  top: 2,
+                                  right: 22,
+                                  child: Container(
+                                      height:120,
+                                      width:3,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        color: AppTheme.white,
+                                      )),
+                                ),
+
+                                Positioned(
+                                  top: 20,
+                                  right: 10,
+                                  child: Container(    decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                    color: AppTheme.redAcc,
+                                  ),child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(Icons.notifications , color: AppTheme.green,),
+                                  )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 9,) ,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text("لقد تم قبول طلبك رقم 7676"),
+                                  Text("12/98/2022     98:98 am"),
+
+                                ],
+                              ),
+                            ),
+
+                          ],),
+                        );
+                      }, body: Text("asdasdasdsadasdasdsd"))
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Theme(
+
+                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
+                  child: ExpansionPanelList(
+                    elevation: 0,
+                    children: [
+                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
+                        return Container(
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                            color: AppTheme.green,
+                          ),
+                          child: Row(children: [
+                            Stack(
+                              children: [
+                                Container(
+                                    height:90,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      color: AppTheme.green,
+                                    )),
+                                Positioned(
+                                  top: 2,
+                                  right: 22,
+                                  child: Container(
+                                      height:120,
+                                      width:3,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        color: AppTheme.white,
+                                      )),
+                                ),
+
+                                Positioned(
+                                  top: 20,
+                                  right: 10,
+                                  child: Container(    decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                    color: AppTheme.redAcc,
+                                  ),child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(Icons.notifications , color: AppTheme.green,),
+                                  )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 9,) ,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text("لقد تم قبول طلبك رقم 7676"),
+                                  Text("12/98/2022     98:98 am"),
+
+                                ],
+                              ),
+                            ),
+
+                          ],),
+                        );
+                      }, body: Text("asdasdasdsadasdasdsd"))
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Theme(
+
+                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
+                  child: ExpansionPanelList(
+                    elevation: 0,
+                    children: [
+                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
+                        return Container(
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                            color: AppTheme.green,
+                          ),
+                          child: Row(children: [
+                            Stack(
+                              children: [
+                                Container(
+                                    height:90,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      color: AppTheme.green,
+                                    )),
+                                Positioned(
+                                  top: 2,
+                                  right: 22,
+                                  child: Container(
+                                      height:120,
+                                      width:3,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        color: AppTheme.white,
+                                      )),
+                                ),
+
+                                Positioned(
+                                  top: 20,
+                                  right: 10,
+                                  child: Container(    decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                                    color: AppTheme.redAcc,
+                                  ),child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(Icons.notifications , color: AppTheme.green,),
+                                  )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 9,) ,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text("لقد تم قبول طلبك رقم 7676"),
+                                  Text("12/98/2022     98:98 am"),
+
+                                ],
+                              ),
+                            ),
+
+                          ],),
+                        );
+                      }, body: Text("asdasdasdsadasdasdsd"))
+                    ],
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),

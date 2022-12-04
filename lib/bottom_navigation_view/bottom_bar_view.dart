@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nwader/Services/ApiManager.dart';
 import 'package:nwader/auth_screen/Login.dart';
 import 'package:nwader/home_screen/categories.dart';
@@ -167,8 +168,8 @@ class _BottomBarViewState extends State<BottomBarView>
                           BoxShadow(
                               color: AppTheme.white
                                   ,
-                              offset: const Offset(0.0, 10.0),
-                              blurRadius: 12.0),
+                              offset: const Offset(0.0, 4.0),
+                              blurRadius: 3.0),
                         ],
                       ),
                       child: Material(
@@ -319,7 +320,19 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                     Image.asset(widget.tabIconData!.isSelected
                         ? widget.tabIconData!.selectedImagePath
                         : widget.tabIconData!.imagePath ,),
-                    Text( widget.tabIconData!.title ,style: TextStyle(color: AppTheme.white),)
+                    Padding(
+                      padding: const EdgeInsets.only(top:8.0),
+                      child: Text( widget.tabIconData!.title ,
+                          style: GoogleFonts.getFont(
+                            AppTheme.fontName,
+                            textStyle: TextStyle(
+                              fontFamily: AppTheme.fontName,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              color: AppTheme.white,
+                            ),
+                          ),),
+                    )
                   ],
                 ),
               ),

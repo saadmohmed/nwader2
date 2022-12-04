@@ -154,7 +154,7 @@ favorite = widget.mealsListData!.isFav;
                     ),
                   ),
                   Positioned(
-                    top: 150,
+                    top: 160,
                     right: 10,
                     child: Container(
                       child: Text(
@@ -172,7 +172,7 @@ favorite = widget.mealsListData!.isFav;
                     ),
                   ),
                   Positioned(
-                    top: 180,
+                    top: 185,
                     right: 10,
                     child: Container(
                       child: Text(

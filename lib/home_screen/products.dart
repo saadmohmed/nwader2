@@ -54,6 +54,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
         key: _key,
         drawer: DrawerWidget(),
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text(widget.name.toString() ,    style: GoogleFonts.getFont(
@@ -96,7 +97,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
             //to give space fsrom top
             // getAppBarUI(),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
 
             //page content here

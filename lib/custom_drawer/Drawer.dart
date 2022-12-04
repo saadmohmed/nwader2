@@ -102,35 +102,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         if (!snapshot.hasData) {
-                          return   GestureDetector(
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Login()),
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Image.asset('assets/icons/user-icon.png'),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'تسجيل الدخول',
-                                  style: GoogleFonts.getFont(
-                                    AppTheme.fontName,
-                                    textStyle: TextStyle(
-                                      fontFamily: AppTheme.fontName,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18,
-                                      letterSpacing: 0.5,
-                                      color: AppTheme.white,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
+                          return  SizedBox();
                         } else {
                           return GestureDetector(
                             onTap: () async {
@@ -325,6 +297,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       if (snapshot.data != null) {
                         return GestureDetector(
                           onTap: () async {
+                            await _apiProvider.logout();
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => Login()),
@@ -386,107 +359,106 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     }
                   },
                 ),
-                SizedBox( height:20) ,
-                Padding(
-                  padding: const EdgeInsets.only(right: 30.0, top: 30),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        InkWell(
-                          splashColor: AppTheme.orange,
-                          highlightColor: AppTheme.orange,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(32.0)),
-                          onTap: () {},
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.orange,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child:
-                                  Image.asset('assets/icons/facebook-icon.png'),
-                            ),
+                SizedBox( height:MediaQuery.of(context).size.height / 4) ,
+                Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        splashColor: AppTheme.orange,
+                        highlightColor: AppTheme.orange,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(32.0)),
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppTheme.orange,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child:
+                                Image.asset('assets/icons/facebook-icon.png'),
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          splashColor: AppTheme.orange,
-                          highlightColor: AppTheme.orange,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(32.0)),
-                          onTap: () {},
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.orange,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child:
-                                  Image.asset('assets/icons/twitter-icon.png'),
-                            ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        splashColor: AppTheme.orange,
+                        highlightColor: AppTheme.orange,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(32.0)),
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppTheme.orange,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child:
+                                Image.asset('assets/icons/twitter-icon.png'),
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          splashColor: AppTheme.orange,
-                          highlightColor: AppTheme.orange,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(32.0)),
-                          onTap: () {},
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.orange,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Image.asset(
-                                  'assets/icons/instagram-icon.png'),
-                            ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        splashColor: AppTheme.orange,
+                        highlightColor: AppTheme.orange,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(32.0)),
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppTheme.orange,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.asset(
+                                'assets/icons/instagram-icon.png'),
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          splashColor: AppTheme.orange,
-                          highlightColor: AppTheme.orange,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(32.0)),
-                          onTap: () {},
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.orange,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child:
-                                  Image.asset('assets/icons/snapchat-icon.png'),
-                            ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        splashColor: AppTheme.orange,
+                        highlightColor: AppTheme.orange,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(32.0)),
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppTheme.orange,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child:
+                                Image.asset('assets/icons/snapchat-icon.png'),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

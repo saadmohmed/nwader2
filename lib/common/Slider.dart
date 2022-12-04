@@ -30,7 +30,7 @@ final  List<Ad> ads ;
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage("https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
+                    image: DecorationImage(image: NetworkImage("https://nwader.ejad-dev.com/banner.png"),
                         fit: BoxFit.fill),
                     color: Colors.amber,borderRadius: BorderRadius.circular(15.0),
                   ),

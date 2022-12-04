@@ -210,7 +210,7 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: <Widget>[
-            getMainListViewUI(),
+            Center(child: getMainListViewUI()),
 
             bottomBar(animationController, context),
 
@@ -230,9 +230,9 @@ class _CategoriesState extends State<Categories> with TickerProviderStateMixin {
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
+              // top: AppBar().preferredSize.height +
+              //     MediaQuery.of(context).padding.top +
+              // 0,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
             itemCount: listViews.length,

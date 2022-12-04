@@ -608,9 +608,9 @@ class ApiProvider {
 
   Future logout() async {
     final storage = new FlutterSecureStorage();
-    final name = await storage.deleteAll();
+     await storage.deleteAll();
 
-    return name;
+    return true;
   }
 
   Future register(String phone, String password, String name) async {
