@@ -101,7 +101,7 @@ class _NotificationsState extends State<Notifications>
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text(
-            'حسابي',
+            'الأشعارات',
             style: GoogleFonts.getFont(
               AppTheme.fontName,
               textStyle: TextStyle(
@@ -124,7 +124,7 @@ class _NotificationsState extends State<Notifications>
           actions: [
             GestureDetector(
               onTap: () async {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context,true);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -141,280 +141,14 @@ class _NotificationsState extends State<Notifications>
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              //to give space from top
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Theme(
+     NotificationBody(),
+              NotificationBody(),
+              NotificationBody(),
+              NotificationBody(),
 
-                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
-                  child: ExpansionPanelList(
-                    elevation: 0,
 
-                    children: [
-                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
-                        return Container(
-                          height: 70,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                            color: AppTheme.green,
-                          ),
-                          child: Row(children: [
-                            Stack(
-                              children: [
-                                Container(
-                                height:90,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                  color: AppTheme.green,
-                                )),
-                                Positioned(
-                                  top: 2,
-                                  right: 22,
-                                  child: Container(
-                                      height:120,
-                                      width:3,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                                        color: AppTheme.white,
-                                      )),
-                                ),
 
-                                Positioned(
-                                  top: 20,
-                                  right: 10,
-                                  child: Container(    decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    color: AppTheme.redAcc,
-                                  ),child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Icon(Icons.notifications , color: AppTheme.green,),
-                                  )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 9,) ,
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("لقد تم قبول طلبك رقم 7676"),
-                                  Text("12/98/2022     98:98 am"),
 
-                                ],
-                              ),
-                            ),
-
-                          ],),
-                        );
-                      }, body: Text("asdasdasdsadasdasdsd")  , isExpanded: true)
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Theme(
-
-                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
-                  child: ExpansionPanelList(
-                    elevation: 0,
-                    children: [
-                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
-                        return Container(
-                          height: 70,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                            color: AppTheme.green,
-                          ),
-                          child: Row(children: [
-                            Stack(
-                              children: [
-                                Container(
-                                    height:90,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      color: AppTheme.green,
-                                    )),
-                                Positioned(
-                                  top: 2,
-                                  right: 22,
-                                  child: Container(
-                                      height:120,
-                                      width:3,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                                        color: AppTheme.white,
-                                      )),
-                                ),
-
-                                Positioned(
-                                  top: 20,
-                                  right: 10,
-                                  child: Container(    decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    color: AppTheme.redAcc,
-                                  ),child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Icon(Icons.notifications , color: AppTheme.green,),
-                                  )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 9,) ,
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("لقد تم قبول طلبك رقم 7676"),
-                                  Text("12/98/2022     98:98 am"),
-
-                                ],
-                              ),
-                            ),
-
-                          ],),
-                        );
-                      }, body: Text("asdasdasdsadasdasdsd"))
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Theme(
-
-                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
-                  child: ExpansionPanelList(
-                    elevation: 0,
-                    children: [
-                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
-                        return Container(
-                          height: 70,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                            color: AppTheme.green,
-                          ),
-                          child: Row(children: [
-                            Stack(
-                              children: [
-                                Container(
-                                    height:90,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      color: AppTheme.green,
-                                    )),
-                                Positioned(
-                                  top: 2,
-                                  right: 22,
-                                  child: Container(
-                                      height:120,
-                                      width:3,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                                        color: AppTheme.white,
-                                      )),
-                                ),
-
-                                Positioned(
-                                  top: 20,
-                                  right: 10,
-                                  child: Container(    decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    color: AppTheme.redAcc,
-                                  ),child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Icon(Icons.notifications , color: AppTheme.green,),
-                                  )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 9,) ,
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("لقد تم قبول طلبك رقم 7676"),
-                                  Text("12/98/2022     98:98 am"),
-
-                                ],
-                              ),
-                            ),
-
-                          ],),
-                        );
-                      }, body: Text("asdasdasdsadasdasdsd"))
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Theme(
-
-                  data: Theme.of(context).copyWith(cardColor: AppTheme.green),
-                  child: ExpansionPanelList(
-                    elevation: 0,
-                    children: [
-                      ExpansionPanel(headerBuilder: (BuildContext context , bool isExpanded){
-                        return Container(
-                          height: 70,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                            color: AppTheme.green,
-                          ),
-                          child: Row(children: [
-                            Stack(
-                              children: [
-                                Container(
-                                    height:90,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      color: AppTheme.green,
-                                    )),
-                                Positioned(
-                                  top: 2,
-                                  right: 22,
-                                  child: Container(
-                                      height:120,
-                                      width:3,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                                        color: AppTheme.white,
-                                      )),
-                                ),
-
-                                Positioned(
-                                  top: 20,
-                                  right: 10,
-                                  child: Container(    decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    color: AppTheme.redAcc,
-                                  ),child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Icon(Icons.notifications , color: AppTheme.green,),
-                                  )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 9,) ,
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("لقد تم قبول طلبك رقم 7676"),
-                                  Text("12/98/2022     98:98 am"),
-
-                                ],
-                              ),
-                            ),
-
-                          ],),
-                        );
-                      }, body: Text("asdasdasdsadasdasdsd"))
-                    ],
-                  ),
-                ),
-              ),
 
             ],
           ),
@@ -422,4 +156,150 @@ class _NotificationsState extends State<Notifications>
       ),
     );
   }
+
 }
+
+class NotificationBody extends StatefulWidget {
+  const NotificationBody({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationBody> createState() => _NotificationBodyState();
+}
+
+class _NotificationBodyState extends State<NotificationBody> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+bool _visiable = false;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: ()async{
+            setState(() {
+              if(_visiable == false){
+                _visiable = true ;
+
+              }else{
+                _visiable = false ;
+
+              }
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: AppTheme.green,
+              ),
+              child: Row(children: [
+                Stack(
+                  children: [
+                    Container(
+                        height:90,
+                        width: 40,
+                        decoration: const BoxDecoration(
+                          color: AppTheme.green,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                        )),
+                    Positioned(
+                      top: 2,
+                      right: 22,
+                      child: Container(
+                          height:120,
+                          width:3,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            color: AppTheme.white,
+                          )),
+                    ),
+
+                    Positioned(
+                      top: 30,
+                      right: 10,
+                      child: Container(    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        color: AppTheme.redAcc,
+                      ),child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Icon(Icons.notifications , color: AppTheme.green,),
+                      )),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 9,) ,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("لقد تم قبول طلبك رقم 7676",   style: GoogleFonts.getFont(
+                        AppTheme.fontName,
+                        textStyle: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          letterSpacing: 0.5,
+                          color: AppTheme.white,
+                        ),
+                      ),),
+                      Text("12/98/2022     98:98 am",   style: GoogleFonts.getFont(
+                        AppTheme.fontName,
+                        textStyle: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          letterSpacing: 0.5,
+                          color: AppTheme.grey,
+                        ),
+                      )),
+
+                    ],
+                  ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width/8,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:Icon(Icons.arrow_downward_sharp , size: 30,color: AppTheme.white,),
+                ),
+
+              ],),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: _visiable,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: AppTheme.background_c,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("sadasdlusaodhsaud body sadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaud"),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+

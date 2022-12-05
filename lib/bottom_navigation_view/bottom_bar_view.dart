@@ -10,6 +10,7 @@ import 'package:nwader/profile/profile.dart';
 import '../../main.dart';
 import '../app_theme.dart';
 import '../home_screen/cart.dart';
+import '../home_screen/myorders.dart';
 import '../models/tabIcon_data.dart';
 
 class BottomBarView extends StatefulWidget {
@@ -303,7 +304,22 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                 }
 
             }
+            if(widget.tabIconData?.index == 1){
+              dynamic check_auth =await _api.getName();
+              if(check_auth != null){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyOrders()),
+                );
+              }else{
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
 
+              }
+
+            }
           },
           child: Stack(
             alignment: AlignmentDirectional.center,
