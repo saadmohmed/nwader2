@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nwader/Services/ApiManager.dart';
+import 'package:nwader/home_screen/add_address.dart';
 import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,6 +22,23 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  String? token = await messaging.getToken();
+ApiProvider _api = new ApiProvider();
+  final storage = new FlutterSecureStorage();
+  final ftoken = await storage.read(
+    key: 'ftoken',
+  );
+  // if(token != ftoken){
+    await _api.update_device_key(token);
+
+    // if (Platform.isAndroid) {
+    //   await _api.update_device_key(token , 'andriod');
+    // } else if (Platform.isIOS) {
+    //   await _api.update_device_key(token ,'ios' );
+    // }
+
+  // }
+  await storage.write(key: 'ftoken', value: token!);
 
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -38,6 +58,20 @@ void main() async {
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
     }
+  });
+
+  FirebaseMessaging.onBackgroundMessage((message) async{
+    // print(message.data);
+
+  });
+
+
+  FirebaseMessaging.onMessageOpenedApp.listen((message) async{
+    print(message.data);
+    print('Message clicked!');
+    var notificationData = message.data;
+    print(notificationData);
+
   });
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,

@@ -101,10 +101,10 @@ class _FavoritesState extends State<Favorites> with TickerProviderStateMixin {
               FutureBuilder(
                   future: _api.get_user_favorite(),
                   builder: (context, snapshot) {
-                    print(snapshot.data);
 
                     if (snapshot.hasData) {
                       dynamic data = snapshot.data;
+                      print(data);
                       int i = 0;
                       return Center(
                           child: Padding(
@@ -122,14 +122,20 @@ class _FavoritesState extends State<Favorites> with TickerProviderStateMixin {
 
                                 return GestureDetector(
                                   onTap: () async {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                            animationController: widget.animationController,
-                                            id: e["id"].toString(),
-                                          )),
-                                    );
+
+
+                                    ApiProvider _api = new ApiProvider();
+                                    dynamic config = await _api.get_config();
+                                    if(config['status'] == true){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ProductDetails(
+                                              animationController: widget.animationController,
+                                              id: e["id"],config: config,
+                                            )),
+                                      );
+                                    }
                                   },
                                   child: MealsView(
                                     animationController: widget.animationController,

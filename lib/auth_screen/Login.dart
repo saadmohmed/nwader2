@@ -176,7 +176,7 @@ class Login extends StatelessWidget {
                       color: const Color(0xFFEFEFEF),
                     ),
                   ),
-                  child: InkWell(
+                  child: GestureDetector(
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
 

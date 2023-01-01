@@ -3,7 +3,6 @@ import 'dart:ffi';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,78 +19,15 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications>
     with TickerProviderStateMixin {
-  List<Widget> listViews = <Widget>[];
-  final ScrollController scrollController = ScrollController();
-  double topBarOpacity = 0.0;
-  AnimationController? animationController;
 
-  Animation<double>? topBarAnimation;
 
-  final storage = new FlutterSecureStorage();
-  ApiProvider _api = new ApiProvider();
-  FocusNode textFieldFocusNode = FocusNode();
-  late SingleValueDropDownController _cnt;
-
-  dynamic _state = '';
-  bool status = true;
-  int quantity = 0;
-
-  double address_opacity = 1;
-  double payment_opacity = 1;
-
-  Icon arrow_down = Icon(
-    Icons.arrow_downward_sharp,
-    color: AppTheme.white,
-  );
-  Icon arrow_up = Icon(Icons.arrow_upward_sharp, color: AppTheme.white);
-
-  String? payment_method = 'ar';
-  String? address;
-  @override
-  void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
-
-    topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-
-    scrollController.addListener(() {
-      if (scrollController.offset >= 24) {
-        if (topBarOpacity != 1.0) {
-          setState(() {
-            topBarOpacity = 1.0;
-          });
-        }
-      } else if (scrollController.offset <= 24 &&
-          scrollController.offset >= 0) {
-        if (topBarOpacity != scrollController.offset / 24) {
-          setState(() {
-            topBarOpacity = scrollController.offset / 24;
-          });
-        }
-      } else if (scrollController.offset <= 0) {
-        if (topBarOpacity != 0.0) {
-          setState(() {
-            topBarOpacity = 0.0;
-          });
-        }
-      }
-    });
-    super.initState();
-  }
-
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController password = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-
-  TextEditingController phone = TextEditingController();
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+// Create an instance variable.
+
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       color: AppTheme.background,
       child: Scaffold(
@@ -138,29 +74,65 @@ class _NotificationsState extends State<Notifications>
         ),
         drawer: DrawerWidget(),
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-     NotificationBody(),
-              NotificationBody(),
-              NotificationBody(),
-              NotificationBody(),
-
-
-
-
-
-            ],
-          ),
-        ),
+        body: NotificationsStatless(),
       ),
     );
   }
 
 }
+class NotificationsStatless extends StatelessWidget {
+
+  final storage = new FlutterSecureStorage();
+  ApiProvider _api = new ApiProvider();
+  @override
+  Widget build(BuildContext context) {
+
+    return SingleChildScrollView(
+      child:Column(
+        children: [
+          FutureBuilder(
+            future: _api.get_user_notification(),
+            builder: (context, snapshot) {
+              // print(data);
+              if(snapshot.hasData){
+                dynamic data = snapshot.data ;
+                print(data);
+                if(data['notifications'] != null){
+                  return Column(
+                      children: data['notifications'].map<Widget>((e) {
+                        WidgetsBinding.instance.addPostFrameCallback((_){
+
+
+                        });
+
+                        return   NotificationBody(title: e['title'], body: e['message'], created_at: e['created_text'],);
+                      }).toList()
+
+
+
+                  );
+                }else{
+                  return Center(child: Text("الأشعارت فارغة"),);
+                }
+
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+
+            },
+          ),
+        ],
+      ) ,
+    );
+  }
+}
 
 class NotificationBody extends StatefulWidget {
-  const NotificationBody({Key? key}) : super(key: key);
+  const NotificationBody({Key? key , required this.title , required this.body , required this.created_at}) : super(key: key);
+  final String title ;
+  final String body ;
+  final String created_at ;
+
 
   @override
   State<NotificationBody> createState() => _NotificationBodyState();
@@ -247,7 +219,7 @@ bool _visiable = false;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("لقد تم قبول طلبك رقم 7676",   style: GoogleFonts.getFont(
+                      Text(widget.title,   style: GoogleFonts.getFont(
                         AppTheme.fontName,
                         textStyle: TextStyle(
                           fontFamily: AppTheme.fontName,
@@ -257,7 +229,7 @@ bool _visiable = false;
                           color: AppTheme.white,
                         ),
                       ),),
-                      Text("12/98/2022     98:98 am",   style: GoogleFonts.getFont(
+                      Text(widget.created_at,   style: GoogleFonts.getFont(
                         AppTheme.fontName,
                         textStyle: TextStyle(
                           fontFamily: AppTheme.fontName,
@@ -271,7 +243,7 @@ bool _visiable = false;
                     ],
                   ),
                 ),
-                SizedBox(width: MediaQuery.of(context).size.width/8,),
+                SizedBox(width: MediaQuery.of(context).size.width/4.5,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:Icon(Icons.arrow_downward_sharp , size: 30,color: AppTheme.white,),
@@ -293,7 +265,7 @@ bool _visiable = false;
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("sadasdlusaodhsaud body sadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaudsadasdlusaodhsaud"),
+                child: Text(widget.body),
               ),
             ),
           ),

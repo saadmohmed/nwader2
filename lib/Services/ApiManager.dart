@@ -62,12 +62,32 @@ class ApiProvider {
     }
     return null;
   }
+  Future getAreas() async {
+    final storage = new FlutterSecureStorage();
 
+    final http.Response response = await http.get(
+      Uri.parse('${GET_AREAS}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print(data);
+
+      return data;
+
+    }
+    return null;
+  }
   Future getProductData(String id) async {
     final storage = new FlutterSecureStorage();
-  final api_token = await storage.read(
-  key: 'token',
-  );
+    final api_token = await storage.read(
+      key: 'token',
+    );
     final http.Response response = await http.get(
       Uri.parse('${PRODUCT_DATA}?product_id=' + id),
       headers: <String, String>{
@@ -87,10 +107,77 @@ class ApiProvider {
     }
     return null;
   }
+
+  Future get_order(String id) async {
+    final storage = new FlutterSecureStorage();
+  final api_token = await storage.read(
+  key: 'token',
+  );
+    final http.Response response = await http.get(
+      Uri.parse('${ORDERDETAILS}?order_id=' + id),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == true) {
+        return data;
+      }
+      return null;
+    }
+    return null;
+  }
+  Future add_to_address( address_name ,area_id,gov_id , block , street  , build_number ,lat , lng , full_address ,flat) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    final http.Response response = await http.post(
+      Uri.parse('${ADD_USER_ADDRESS}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+      body: {
+        'address_name': address_name,
+        'area_id': area_id,
+        'gov_id': gov_id,
+        'block': block,
+        'street': street,
+        'build_number': build_number,
+        'lat': lat,
+        'lng': lng,
+        'full_address': full_address,
+        'flat': flat,
+
+        'user_id' : user_id
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == true) {
+        return data;
+      }
+      return null;
+    }
+    return null;
+  }
   Future add_to_favorite(String product_id) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
       key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
     );
     final http.Response response = await http.post(
       Uri.parse('${ADD_TO_FAVORITE}'),
@@ -101,6 +188,7 @@ class ApiProvider {
       },
       body: {
         'product_id': product_id,
+        'user_id' : user_id
       },
     );
     if (response.statusCode == 200) {
@@ -113,6 +201,96 @@ class ApiProvider {
     return null;
   }
 
+  Future delete_user_address(address_id) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    if(user_id != null){
+      final http.Response response = await http.post(
+        Uri.parse('${DELETE_ADDRESS}'),
+        headers: <String, String>{
+          'Accept': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+        },
+        body: {
+          'user_id': user_id,
+          'address_id' : address_id
+        },
+      );
+        final data = json.decode(response.body);
+        return data;
+
+    }
+    return null;
+
+
+  }
+
+  Future update_device_key(token) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    if(user_id != null){
+      final http.Response response = await http.post(
+        Uri.parse('${UPDATE_DEVICE_KEY}'),
+        headers: <String, String>{
+          'Accept': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+        },
+        body: {
+          'user_id': user_id,
+          'device_key' : token
+        },
+      );
+    }
+
+  }
+  Future getPage(page) async {
+    final storage = new FlutterSecureStorage();
+
+    final http.Response response = await http.get(
+      Uri.parse('${GET_PAGE}/'+page),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    );
+    print(json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data;
+    }
+    return null;
+  }
+  Future get_config() async {
+    final storage = new FlutterSecureStorage();
+
+    final http.Response response = await http.get(
+      Uri.parse('${CONFIGURATION}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    );
+    print(json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+    return data;
+    }
+    return null;
+  }
   Future get_user_favorite() async {
       final storage = new FlutterSecureStorage();
         final api_token = await storage.read(
@@ -121,6 +299,7 @@ class ApiProvider {
       final user_id = await storage.read(
         key: 'id',
       );
+      print(user_id);
       dynamic url =  Uri.parse('${GET_FAVORITES}');
       if(user_id != null){
      url =    Uri.parse('${GET_FAVORITES}?user_id='+user_id!);
@@ -133,7 +312,6 @@ class ApiProvider {
         'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
       },
     );
-      print(json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -143,6 +321,67 @@ class ApiProvider {
     }
     return null;
   }
+
+  Future get_user_notification() async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    dynamic url =  Uri.parse('${USER_NOTIFICATION}');
+    if(user_id != null){
+      url =    Uri.parse('${USER_NOTIFICATION}?user_id='+user_id!);
+    }
+    final http.Response response = await http.get(
+      url,
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+        return data;
+
+    }
+    return null;
+  }
+  Future get_user_order() async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    print(api_token);
+
+    dynamic url =  Uri.parse('${GET_ORDERS}');
+    if(user_id != null){
+      url =   Uri.parse('${GET_ORDERS}?user_id='+user_id!);
+    }
+    final http.Response response = await http.get(
+      url,
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+    );
+    print( json.decode(response.body));
+    // if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      // if (data['status'] == true) {
+        return data;
+      // }
+      // return null;
+
+    return null;
+  }
+
   Future get_user_cart() async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
@@ -151,10 +390,11 @@ class ApiProvider {
     final user_id = await storage.read(
       key: 'id',
     );
+    print(api_token);
 
-    dynamic url =  Uri.parse('${CAT_WITH_PRODUCTS}');
+    dynamic url =  Uri.parse('${GET_CART}');
     if(user_id != null){
-      Uri.parse('${GET_CART}?user_id='+user_id!);
+    url =   Uri.parse('${GET_CART}?user_id='+user_id!);
     }
     final http.Response response = await http.get(
     url,
@@ -164,6 +404,7 @@ class ApiProvider {
         'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
       },
     );
+    print( json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -173,8 +414,8 @@ class ApiProvider {
     }
     return null;
   }
-
-  Future add_to_cart(String product_id) async {
+  // 'id', 'user_id', 'product_id', 'product_variant_id', 'quantity', 'cut_type_id', 'cover_type_id', 'is_slaughtered',
+  Future add_to_cart(String product_id  , is_slaughtered , cover_type_id , cut_type_id , quantity , product_variant_id) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
       key: 'token',
@@ -183,7 +424,7 @@ class ApiProvider {
       key: 'id',
     );
 
-    dynamic url =  Uri.parse('${CAT_WITH_PRODUCTS}');
+    dynamic url =  Uri.parse('${ADD_TO_CART}');
     if(user_id != null){
       Uri.parse('${ADD_TO_CART}?user_id='+user_id!);
     }
@@ -195,9 +436,16 @@ class ApiProvider {
         'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
       },
       body: {
-        'product_id': product_id,
+    'user_id':user_id,
+    'product_id':product_id,
+    'product_variant_id':product_variant_id,
+    'quantity':quantity.toString(),
+    'cut_type_id':cut_type_id.toString(),
+    'cover_type_id':cover_type_id.toString(),
+    'is_slaughtered':is_slaughtered,
       },
     );
+    print(json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -247,7 +495,32 @@ class ApiProvider {
     // }
     // return null;
   }
+  Future add_order(address_id  , payment_type  ,price ) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    final http.Response response = await http.post(
+      Uri.parse('${ADD_ORDER}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+      body: {
+        'user_id':user_id.toString(),
+        'address_id' : address_id.toString(),
+        'payment_type' : payment_type.toString(),
+  'price' : price,
+      },
+    );
 
+      return json.decode(response.body);
+
+  }
   Future update_profile(String name , String email , String phone ) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
@@ -344,214 +617,8 @@ class ApiProvider {
     return null;
   }
 
-  // Future check_coupon(dynamic code) async {
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   final http.Response response = await http.post(
-  //     Uri.parse('${CHECKCOUPON}?api_token=$api_token'),
-  //     headers: <String, String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //     body: {
-  //       'coupon':code
-  //     },
-  //   );
-  //   if (response.statusCode == 200) {
-  //     return json.decode(response.body);
-  //   }
-  //   return null;
-  // }
-  // Future add_to_cart(String book_id) async {
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   final http.Response response = await http.post(
-  //     Uri.parse('${ADD_TO_CART}?api_token=$api_token'),
-  //     headers: <String, String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //     body: {
-  //       'book_id': book_id,
-  //     },
-  //   );
-  //   if (response.statusCode == 200) {
-  //     return json.decode(response.body);
-  //   }
-  //   return null;
-  // }
-  // Future<List<Book>> mybooks( ) async{
-  //
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   List<Book> books = [];
-  //   final http.Response response = await http.get(
-  //     Uri.parse(MY_BOOKS+"?api_token="+api_token!),
-  //     headers:<String , String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //
-  //   );
-  //   if (response.statusCode == 200) {
-  //
-  //     dynamic body = json.decode(response.body);
-  //     body["data"].forEach((elemnt){
-  //       books.add(new Book(
-  //           id: elemnt['id'],
-  //           title: elemnt['title'] ,
-  //           price: elemnt["price"],
-  //           image: elemnt['preview'],
-  //           discount: elemnt["price"],
-  //           data_file: elemnt["file_data"],
-  //           content: elemnt["content"]
-  //
-  //       ));
-  //
-  //     });
-  //
-  //
-  //   }
-  //   return books;
-  // }
-  // Future<List<Book>> getCart( ) async{
-  //
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   List<Book> books = [];
-  //   final http.Response response = await http.get(
-  //     Uri.parse(CART+"?api_token="+api_token!),
-  //     headers:<String , String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //
-  //   );
-  //   if (response.statusCode == 200) {
-  //     dynamic body = json.decode(response.body);
-  //     body["data"].forEach((elemnt){
-  //       elemnt = elemnt['book'];
-  //       books.add(new Book(
-  //           id: elemnt['id'],
-  //           title: elemnt['title'] ,
-  //           price: elemnt["price"],
-  //           image: elemnt['preview'],
-  //           discount: elemnt["price"],
-  //           data_file: elemnt["file_data"],
-  //           content: elemnt["content"]
-  //
-  //       ));
-  //
-  //     });
-  //
-  //
-  //   }
-  //   return books;
-  // }
-  // Future add_order() async {
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   final http.Response response = await http.post(
-  //     Uri.parse('${ADD_ORDER}?api_token='+api_token!),
-  //     headers: <String, String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //     body: {
-  //       'make_order': "true",
-  //     },
-  //   );
-  //   if (response.statusCode == 200) {
-  //     return json.decode(response.body);
-  //   }
-  //   return null;
-  // }
-  //
-  // Future<List<Book>> getBooks(dynamic type  ,dynamic limit ) async{
-  //
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   List<Book> books = [];
-  //   final http.Response response = await http.get(
-  //     Uri.parse(BOOKS+"?api_token="+api_token!),
-  //     headers:<String , String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //
-  //   );
-  //   if (response.statusCode == 200) {
-  //
-  //
-  //     dynamic body = json.decode(response.body);
-  //     body["data"].forEach((elemnt){
-  //       books.add(new Book(
-  //           id: elemnt['id'],
-  //           title: elemnt['title'] ,
-  //           price: elemnt["price"],
-  //           image: elemnt['preview'],
-  //           discount: elemnt["price"],
-  //           data_file: elemnt["file_data"],
-  //           content: elemnt["content"]
-  //
-  //       ));
-  //
-  //     });
-  //
-  //
-  //   }
-  //   return books;
-  // }
-  // Future<Book> book(dynamic id  ) async{
-  //
-  //   final storage = new FlutterSecureStorage();
-  //   final api_token = await storage.read(
-  //     key: 'api_token',
-  //   );
-  //   Book book = new Book() ;
-  //   final http.Response response = await http.get(
-  //     Uri.parse(BOOKS+"?api_token="+api_token!+'&id='+id),
-  //     headers:<String , String>{
-  //       'Accept': 'application/json; charset=UTF-8',
-  //       'Access-Control-Allow-Origin': '*'
-  //     },
-  //
-  //   );
-  //   if (response.statusCode == 200) {
-  //
-  //
-  //     dynamic body = json.decode(response.body);
-  //     body["data"].forEach((elemnt){
-  //       book = new Book(
-  //           id: elemnt['id'],
-  //           title: elemnt['title'] ,
-  //           price: elemnt["price"],
-  //           image: elemnt['preview'],
-  //           discount: elemnt["price"],
-  //           data_file: elemnt["file_data"],
-  //           content: elemnt["content"]
-  //
-  //       );
-  //
-  //     });
-  //
-  //
-  //   }
-  //   return book;
-  // }
-  //
+
+
   Future<dynamic> user() async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
@@ -599,11 +666,38 @@ class ApiProvider {
 
 
   Future getUserAddress() async {
+
+
     final storage = new FlutterSecureStorage();
-    final addresses = await storage.read(
-      key: 'addresses',
+    final api_token = await storage.read(
+      key: 'token',
     );
-    return jsonDecode(addresses!);
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    print(api_token);
+
+    dynamic url =  Uri.parse('${GET_USER_ADDRESS}');
+    if(user_id != null){
+      url =   Uri.parse('${GET_USER_ADDRESS}?user_id='+user_id!);
+    }
+    final http.Response response = await http.get(
+      url,
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+    );
+    print( json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == true) {
+        return data['addresss'];
+      }
+      return null;
+    }
+    return null;
   }
 
   Future logout() async {

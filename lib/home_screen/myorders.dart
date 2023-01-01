@@ -1,9 +1,4 @@
-import 'dart:ffi';
 
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dropdown_textfield/dropdown_textfield.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Services/ApiManager.dart';
 import '../app_theme.dart';
 import '../custom_drawer/Drawer.dart';
-import '../model/Ad.dart';
+import 'notifications.dart';
+import 'orderDetails.dart';
 
 class MyOrders extends StatefulWidget {
   @override
@@ -80,14 +76,14 @@ class _MyOrdersState extends State<MyOrders>
           backgroundColor: AppTheme.white,
           centerTitle: true,
           title: Text(
-            'طلباتي',
+            'الطلبات',
             style: GoogleFonts.getFont(
               AppTheme.fontName,
               textStyle: TextStyle(
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w700,
                 fontSize: 20,
-                color: AppTheme.green,
+                color: AppTheme.darkText,
               ),
             ),
           ),
@@ -103,14 +99,14 @@ class _MyOrdersState extends State<MyOrders>
           actions: [
             GestureDetector(
               onTap: () async {
-                Navigator.pop(context,true);
-              },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Notifications()),
+                );              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.arrow_forward_sharp,
-                  color: AppTheme.green,
-                ),
+                child: Image.asset('assets/icons/alert-icon.png'),
               ),
             ),
           ],
@@ -119,14 +115,59 @@ class _MyOrdersState extends State<MyOrders>
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
-OrderBody(),
-              OrderBody(),
+
+            children: [
+              Column(
+                children: <Widget>[
+                  FutureBuilder(
+                    future: _api.get_user_order(),
+                    builder: (context, snapshot) {
+                      // print(data);
+                      dynamic data = snapshot.data ;
+
+                      if(snapshot.hasData){
+                        if(data['status'] == true){
+                          if(data['orders'].length > 0){
+
+                            return Column(
+                                children: data['orders'].map<Widget>((e) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_){
+
+
+                                  });
+
+                                  return   OrderBody(id: e['id'].toString(), idText: e['order_number'].toString(), title: '', body: '', created_at: e['created_at'],create_text: e['create_text'],status:e['status']);
+                                }).toList()
+
+
+
+                            );
+                          }else{
+                            return Center(child: Text("الطلبات فارغة"),);
+                          }
+                        }else{
+                          return Center(child: Text(data['response_message'].toString()),);
+
+                        }
+
+
+
+                      }else if(snapshot.hasError){
+                        return Center(child: Text('error'),);
+
+                      }else{
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                    },
+                  ),
 
 
 
 
 
+                ],
+              ),
             ],
           ),
         ),
@@ -137,7 +178,16 @@ OrderBody(),
 }
 
 class OrderBody extends StatefulWidget {
-  const OrderBody({Key? key}) : super(key: key);
+  const OrderBody({Key? key ,required this.idText, required this.title,required this.create_text ,required this.id, required this.body , required this.created_at , required this.status}) : super(key: key);
+  final String title ;
+  final String id ;
+  final String idText ;
+
+  final String create_text ;
+  final String status ;
+
+  final String body ;
+  final String created_at ;
 
   @override
   State<OrderBody> createState() => _OrderBodyState();
@@ -174,7 +224,7 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
             Stack(
               children: [
                 Container(
-                    height:90,
+                    height:105,
                     width: 40,
                     decoration: const BoxDecoration(
                       color: AppTheme.green,
@@ -182,11 +232,11 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
 
                     )),
                 Positioned(
-                  top: 2,
+                  top: 0,
                   right: 22,
                   child: Container(
-                      height:120,
-                      width:3,
+                      height:500,
+                      width:2,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
                         color: AppTheme.white,
@@ -213,7 +263,7 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("لقد تم قبول طلبك رقم 7676",   style: GoogleFonts.getFont(
+                  Text(" رقم الطلب  ${widget.idText} ",   style: GoogleFonts.getFont(
                     AppTheme.fontName,
                     textStyle: TextStyle(
                       fontFamily: AppTheme.fontName,
@@ -223,7 +273,7 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                       color: AppTheme.white,
                     ),
                   ),),
-                  Text("12/98/2022     98:98 am",   style: GoogleFonts.getFont(
+                  Text("${widget.created_at}     ${widget.create_text}",   style: GoogleFonts.getFont(
                     AppTheme.fontName,
                     textStyle: TextStyle(
                       fontFamily: AppTheme.fontName,
@@ -233,15 +283,62 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                       color: AppTheme.grey,
                     ),
                   )),
+                    Row(children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width/2.2,
+                        child: Text("حالة الطلب :  ${widget.status}",   style: GoogleFonts.getFont(
+                          AppTheme.fontName,
+                          textStyle: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            letterSpacing: 0.5,
+                            color: AppTheme.white,
+                          ),
+                        ),),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width/3.2,
+                        decoration: const BoxDecoration(
+                          color: AppTheme.white,
+                        ),
+                        child: GestureDetector(
+                          onTap: ()async{
+
+                            ApiProvider _api = new ApiProvider();
+                            dynamic data = await _api.get_order(widget.id.toString());
+                            if(data['status'] == true){
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderDetails(order: data['order'],)),
+                              );
+                            }
+
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(child: Text('عرض تفاصيل الطلب' ,
+                              style: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 10,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.green,
+                                ),
+                              ),)),
+                          ),
+                        ),
+                      )
+                    ],),
 
                 ],
               ),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width/8,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:Icon(Icons.arrow_downward_sharp , size: 30,color: AppTheme.white,),
-            ),
+
 
           ],),
         ),
