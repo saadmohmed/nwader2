@@ -431,10 +431,13 @@ i++;
  if(_selectedValue.key ==  element["id"].toString()) {
 
    element['areas'].forEach((element2) {
-     print(element2['id'].toString()+' =>'+_selectedValueArea.key);
-     if(_selectedValueArea.key == element2["id"].toString()){
-       index = i;
+     if(_selectedValueArea != null){
+       print(element2['id'].toString()+' =>'+_selectedValueArea.key);
+       if(_selectedValueArea.key == element2["id"].toString()){
+         index = i;
+       }
      }
+
        i++;
      areaList.add(DropItem(
        key: element2["id"].toString(),
@@ -461,7 +464,8 @@ i++;
    });
  }
     });
-    _selectedValueArea = areaList[index];
+    print('llllllist'+areaList.length.toString());
+    _selectedValueArea =areaList.length > 0 ?  areaList[index] : null;
     return areaList.length > 0 ? SizedBox(
         width: MediaQuery.of(context)
             .size

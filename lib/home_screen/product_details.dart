@@ -808,7 +808,7 @@ class ProductSlider extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                              "https://nwader.com.sa/uploads/1603132197_911704661.jpg"),
+                              i.image),
                           fit: BoxFit.fill),
                       color: Colors.amber,
                       borderRadius: BorderRadius.circular(15.0),
