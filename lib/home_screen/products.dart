@@ -7,8 +7,10 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nwader/home_screen/product_details.dart';
 import 'package:quantity_input/quantity_input.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Services/ApiManager.dart';
 import '../app_theme.dart';
+import '../auth_screen/Login.dart';
 import '../custom_drawer/Drawer.dart';
 import '../model/Ad.dart';
 import '../models/meals_list_data.dart';
@@ -106,6 +108,8 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     dynamic data = snapshot.data;
+                    print('dddddddddddddd');
+                    print(data);
                     int i = 0;
                     return Center(
                         child: Padding(
@@ -131,7 +135,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
                                   MaterialPageRoute(
                                       builder: (context) => ProductDetails(
                                         animationController: widget.animationController,
-                                        id: e["id"],config: config,
+                                        id: e["id"].toString(),config: config,
                                       )),
                                 );
                               }
@@ -228,7 +232,7 @@ class _ProductsState extends State<Products> with TickerProviderStateMixin {
     );
   }
 }
-class MealsView extends StatelessWidget {
+class MealsView extends StatefulWidget {
   const MealsView(
       {Key? key, this.mealsListData, this.animationController, this.animation})
       : super(key: key);
@@ -236,16 +240,27 @@ class MealsView extends StatelessWidget {
   final MealsListData? mealsListData;
   final AnimationController? animationController;
   final Animation<double>? animation;
+
+  @override
+  State<MealsView> createState() => _MealsViewState();
+}
+
+class _MealsViewState extends State<MealsView> {
+  ApiProvider _api = new ApiProvider();
+  String? favorite = 'null';
+
   @override
   Widget build(BuildContext context) {
+    print("shhhi");
+    print(widget.mealsListData?.titleTxt);
     return AnimatedBuilder(
-      animation: animationController!,
+      animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-          opacity: animation!,
+          opacity: widget.animation!,
           child: Transform(
             transform: Matrix4.translationValues(
-                100 * (1.0 - animation!.value), 0.0, 0.0),
+                100 * (1.0 - widget.animation!.value), 0.0, 0.0),
             child: SizedBox(
               width: 170,
               height:250,
@@ -257,7 +272,7 @@ class MealsView extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(mealsListData!.imagePath),
+                          image: NetworkImage(widget.mealsListData!.imagePath),
                           fit: BoxFit.cover),
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),
@@ -268,7 +283,7 @@ class MealsView extends StatelessWidget {
                     right: 10,
                     child: Container(
                       child: Text(
-                        mealsListData!.titleTxt,
+                        widget.mealsListData!.titleTxt,
                         textAlign: TextAlign.start,
                         style: GoogleFonts.getFont(
                           AppTheme.fontName,
@@ -286,7 +301,7 @@ class MealsView extends StatelessWidget {
                     right: 10,
                     child: Container(
                       child: Text(
-                        mealsListData!.short_desc,
+                        widget.mealsListData!.short_desc,
                         style: GoogleFonts.getFont(
                           AppTheme.fontName,
                           textStyle: TextStyle(
@@ -299,7 +314,7 @@ class MealsView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  mealsListData?.kacl != 0
+                  widget.mealsListData?.kacl != 0
                       ? Positioned(
                     top: 200,
                     right: 10,
@@ -309,7 +324,7 @@ class MealsView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Text(
-                            mealsListData!.kacl.toString(),
+                            widget.mealsListData!.kacl.toString(),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.getFont(
                               AppTheme.fontName,
@@ -342,24 +357,222 @@ class MealsView extends StatelessWidget {
                     ),
                   )
                       : Container(),
-                  mealsListData!.isFav == '1'
-                      ? Positioned(
-                    top: 10,
-                    left: 15,
-                    child: Container(
-                      child:
-                      Image.asset('assets/icons/wish-red-icon.png'),
+
+                 favorite == 'null' ?  widget.mealsListData?.isFav == '1'
+                      ? Container(
+                    child: Positioned(
+                      top: 10,
+                      left: 15,
+                      child: GestureDetector(
+                        onTap: ()async{
+                          dynamic token = await _api.get_token();
+                          if(token == null){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login()),
+                            );
+                          }
+                          dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
+                          if(data['status'] == true){
+
+                            Alert(
+                              context: context,
+                              type: AlertType.success,
+                              title: "",
+                              desc:data['response_message']!,
+                              buttons: [
+                                DialogButton(
+                                  child: Text(
+                                    'متابعة',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                  width: 120,
+                                )
+                              ],
+                            ).show();
+                            setState(() {
+                              if(favorite == '1'){
+                                favorite = '0';
+                                widget.mealsListData?.isFav  = '0';
+
+                              }else{
+                                favorite = '1';
+                                widget.mealsListData?.isFav  = '1';
+
+                              }
+                            });
+                          }
+                        },
+                        child: Container(
+                          child:
+                          Image.asset('assets/icons/wish-red-icon.png'),
+                        ),
+                      ),
                     ),
                   )
-                      : Positioned(
-                    top: 10,
-                    left: 15,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      child: Image.asset('assets/icons/wish-icon.png'),
+                      : Container(
+                    child: Positioned(
+                      top: 10,
+                      left: 15,
+                      child: GestureDetector(
+                        onTap: ()async{
+                          dynamic token = await _api.get_token();
+                          if(token == null){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login()),
+                            );
+                          }
+                          dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
+                          if(data['status'] == true){
+
+                            Alert(
+                              context: context,
+                              type: AlertType.success,
+                              title: "",
+                              desc:data['response_message']!,
+                              buttons: [
+                                DialogButton(
+                                  child: Text(
+                                    'متابعة',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                  width: 120,
+                                )
+                              ],
+                            ).show();
+                            setState(() {
+                              if(favorite == '1'){
+                                favorite = '0';
+
+                              }else{
+                                favorite = '1';
+
+                              }
+                            });
+                          }
+
+                        },
+                        child: Container(
+                          width: 20,
+                          height: 20,
+                          child: Image.asset('assets/icons/wish-icon.png'),
+                        ),
+                      ),
                     ),
-                  ),
+                  ) : favorite == '1' ? Container(
+                   child: Positioned(
+                     top: 10,
+                     left: 15,
+                     child: GestureDetector(
+                       onTap: ()async{
+                         dynamic token = await _api.get_token();
+                         if(token == null){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) => Login()),
+                           );
+                         }
+                         dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
+                         if(data['status'] == true){
+
+                           Alert(
+                             context: context,
+                             type: AlertType.success,
+                             title: "",
+                             desc:data['response_message']!,
+                             buttons: [
+                               DialogButton(
+                                 child: Text(
+                                   'متابعة',
+                                   style: TextStyle(
+                                       color: Colors.white, fontSize: 20),
+                                 ),
+                                 onPressed: () => Navigator.pop(context),
+                                 width: 120,
+                               )
+                             ],
+                           ).show();
+                           setState(() {
+                             if(favorite == '1'){
+                               favorite = '0';
+                               widget.mealsListData?.isFav  = '0';
+
+                             }else{
+                               favorite = '1';
+                               widget.mealsListData?.isFav  = '1';
+
+                             }
+                           });
+                         }
+                       },
+                       child: Container(
+                         child:
+                         Image.asset('assets/icons/wish-red-icon.png'),
+                       ),
+                     ),
+                   ),
+                 )  :  Container(
+                   child: Positioned(
+                     top: 10,
+                     left: 15,
+                     child: GestureDetector(
+                       onTap: ()async{
+                         dynamic token = await _api.get_token();
+                         if(token == null){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) => Login()),
+                           );
+                         }
+                         dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
+                         if(data['status'] == true){
+
+                           Alert(
+                             context: context,
+                             type: AlertType.success,
+                             title: "",
+                             desc:data['response_message']!,
+                             buttons: [
+                               DialogButton(
+                                 child: Text(
+                                   'متابعة',
+                                   style: TextStyle(
+                                       color: Colors.white, fontSize: 20),
+                                 ),
+                                 onPressed: () => Navigator.pop(context),
+                                 width: 120,
+                               )
+                             ],
+                           ).show();
+                           setState(() {
+                             if(favorite == '1'){
+                               favorite = '0';
+
+                             }else{
+                               favorite = '1';
+
+                             }
+                           });
+                         }
+
+                       },
+                       child: Container(
+                         width: 20,
+                         height: 20,
+                         child: Image.asset('assets/icons/wish-icon.png'),
+                       ),
+                     ),
+                   ),
+                 ),
                 ],
               ),
             ),
@@ -369,3 +582,5 @@ class MealsView extends StatelessWidget {
     );
   }
 }
+
+

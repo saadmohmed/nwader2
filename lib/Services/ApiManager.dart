@@ -40,7 +40,7 @@ class ApiProvider {
     );
     dynamic url =  Uri.parse('${CAT_WITH_PRODUCTS}');
     if(user_id != null){
-      Uri.parse('${CAT_WITH_PRODUCTS}?user_id='+user_id!);
+     url =  Uri.parse('${CAT_WITH_PRODUCTS}?user_id='+user_id!);
     }
 
     final http.Response response = await http.get(
@@ -88,8 +88,16 @@ class ApiProvider {
     final api_token = await storage.read(
       key: 'token',
     );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    print(user_id);
+    dynamic url =  Uri.parse('${GET_PRODUCTS}?product_id=' + id);
+    if(user_id != null) {
+      url = Uri.parse('${PRODUCT_DATA}?product_id=' + id + '&user_id='+user_id);
+    }
     final http.Response response = await http.get(
-      Uri.parse('${PRODUCT_DATA}?product_id=' + id),
+      url,
       headers: <String, String>{
         'Accept': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
@@ -423,6 +431,15 @@ class ApiProvider {
     final user_id = await storage.read(
       key: 'id',
     );
+    print( {
+      'user_id':user_id,
+      'product_id':product_id,
+      'product_variant_id':product_variant_id,
+      'quantity':quantity.toString(),
+      'cut_type_id':cut_type_id.toString(),
+      'cover_type_id':cover_type_id.toString(),
+      'is_slaughtered':is_slaughtered,
+    });
 
     dynamic url =  Uri.parse('${ADD_TO_CART}');
     if(user_id != null){
@@ -563,9 +580,16 @@ class ApiProvider {
     final api_token = await storage.read(
       key: 'token',
     );
-    final http.Response response = await http.get(
-      Uri.parse('${GET_PRODUCTS}?category_id='+category_id),
-      headers: <String, String>{
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    print(user_id);
+    dynamic url =  Uri.parse('${GET_PRODUCTS}?category_id='+category_id);
+    if(user_id != null) {
+      url = Uri.parse('${GET_PRODUCTS}?category_id='+category_id+'&user_id='+user_id);
+    }
+      final http.Response response = await http.get(
+url,      headers: <String, String>{
         'Accept': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
         'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)

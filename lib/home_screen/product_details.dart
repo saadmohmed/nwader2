@@ -35,7 +35,8 @@ class _ProductDetailsState extends State<ProductDetails>
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
   Animation<double>? topBarAnimation;
-
+  DropItem? _selectedValue ;
+  DropItem? _selectedCut;
   final storage = new FlutterSecureStorage();
   ApiProvider _api = new ApiProvider();
   FocusNode textFieldFocusNode = FocusNode();
@@ -110,9 +111,10 @@ class _ProductDetailsState extends State<ProductDetails>
             FutureBuilder(
                 future: _api.getProductData(widget.id),
                 builder: (context, snapshot) {
-                  print(snapshot.data);
                   if (snapshot.hasData) {
                     dynamic data = snapshot.data;
+                    print(data);
+
                     List<Ad> ads = [];
                     List<DropItem> countryList = [];
                     List<DropItem> cuts = [];
@@ -133,9 +135,14 @@ class _ProductDetailsState extends State<ProductDetails>
                     // item: Row(
                     //   children: [Text('asdasds')],
                     // ))
-
+                    int index2 = 0;
+                    int i2 = 0;
                     if (widget.config["cut_types"] != null) {
                       widget.config["cut_types"].forEach((element) {
+                        if(_selectedCut?.key == element['id'].toString()){
+                          index2 = i2;
+                        }
+                        i2++;
                         cuts.add(DropItem(
                             key: element['id'].toString(),
                             item: Row(
@@ -148,8 +155,13 @@ class _ProductDetailsState extends State<ProductDetails>
                     } else {
                       cuts = [];
                     }
-
+                    int index = 0;
+                    int i = 0;
                     data["variants"].forEach((element) {
+                      if(_selectedValue?.key == element['id'].toString()){
+                        index = i;
+                      }
+                      i++;
                       countryList.add(DropItem(
                         key: element["id"].toString(),
                         item: Row(
@@ -186,8 +198,8 @@ class _ProductDetailsState extends State<ProductDetails>
                         ),
                       ));
                     });
-                    DropItem? _selectedValue = countryList.first;
-                    DropItem? _selectedCut = cuts.first;
+                     _selectedValue = countryList[index];
+                     _selectedCut = cuts[index2];
 
                     return Expanded(
                       child: Container(
@@ -212,6 +224,8 @@ class _ProductDetailsState extends State<ProductDetails>
                                   left: 1,
                                   child: ProductSlider(
                                     ads: ads,
+                                    isFav:data["in_favorite"].toString(),
+                                    id:data["id"].toString()
                                   )),
                               Positioned(
                                   top: 230,
@@ -778,16 +792,26 @@ class _ProductDetailsState extends State<ProductDetails>
     );
   }
 }
-
-class ProductSlider extends StatelessWidget {
+class ProductSlider extends StatefulWidget {
   final List<Ad> ads;
-  const ProductSlider({Key? key, required this.ads}) : super(key: key);
+  final String isFav;
+  final String id;
+
+  const ProductSlider({Key? key, required this.ads , required this.isFav , required this.id}) : super(key: key);
 
   @override
+  State<ProductSlider> createState() => _ProductSliderState();
+}
+
+class _ProductSliderState extends State<ProductSlider> {
+  @override
+  String  favorite = 'null';
+
   Widget build(BuildContext context) {
     final int _current = 0;
     final CarouselController _controller = CarouselController();
-
+ApiProvider _api = new ApiProvider();
+print(widget.isFav);
     return CarouselSlider(
         carouselController: _controller,
         options: CarouselOptions(
@@ -797,7 +821,7 @@ class ProductSlider extends StatelessWidget {
           aspectRatio: 2.0,
           viewportFraction: 1.0,
         ),
-        items: ads.map((i) {
+        items: widget.ads.map((i) {
           return Builder(
             builder: (BuildContext context) {
               return Padding(
@@ -817,7 +841,217 @@ class ProductSlider extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset("assets/icons/wish-red-icon.png"),
+                        child:favorite == 'null' ? widget.isFav == '1'
+                            ? Container(
+                              child: Positioned(
+                          top: 10,
+                          left: 15,
+                          child: GestureDetector(
+                              onTap: ()async{
+                                dynamic token = await _api.get_token();
+                                if(token == null){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()),
+                                  );
+                                }
+                                dynamic data = await _api.add_to_favorite(widget!.id.toString());
+                                if(data['status'] == true){
+
+                                  Alert(
+                                    context: context,
+                                    type: AlertType.success,
+                                    title: "",
+                                    desc:data['response_message']!,
+                                    buttons: [
+                                      DialogButton(
+                                        child: Text(
+                                          'متابعة',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                        width: 120,
+                                      )
+                                    ],
+                                  ).show();
+                                  setState(() {
+                                    if(favorite == '1'){
+                                      favorite = '0';
+
+                                    }else{
+                                      favorite = '1';
+
+                                    }
+                                  });
+                                }
+                              },
+                              child: Container(
+                                child:
+                                Image.asset('assets/icons/wish-red-icon.png'),
+                              ),
+                          ),
+                        ),
+                            )
+                            : Container(
+                              child: Positioned(
+                          top: 10,
+                          left: 15,
+                          child: GestureDetector(
+                              onTap: ()async{
+                                dynamic token = await _api.get_token();
+                                if(token == null){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()),
+                                  );
+                                }
+                                dynamic data = await _api.add_to_favorite(widget!.id.toString());
+                                if(data['status'] == true){
+
+                                  Alert(
+                                    context: context,
+                                    type: AlertType.success,
+                                    title: "",
+                                    desc:data['response_message']!,
+                                    buttons: [
+                                      DialogButton(
+                                        child: Text(
+                                          'متابعة',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                        width: 120,
+                                      )
+                                    ],
+                                  ).show();
+                                  setState(() {
+                                    if(favorite == '1'){
+                                      favorite = '0';
+
+                                    }else{
+                                      favorite = '1';
+
+                                    }
+                                  });
+                                }
+
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                child: Image.asset('assets/icons/wish-icon.png'),
+                              ),
+                          ),
+                        ),
+                            ) : favorite == '1' ?  Container(
+                          child: Positioned(
+                            top: 10,
+                            left: 15,
+                            child: GestureDetector(
+                              onTap: ()async{
+                                dynamic token = await _api.get_token();
+                                if(token == null){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()),
+                                  );
+                                }
+                                dynamic data = await _api.add_to_favorite(widget!.id.toString());
+                                if(data['status'] == true){
+
+                                  Alert(
+                                    context: context,
+                                    type: AlertType.success,
+                                    title: "",
+                                    desc:data['response_message']!,
+                                    buttons: [
+                                      DialogButton(
+                                        child: Text(
+                                          'متابعة',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                        width: 120,
+                                      )
+                                    ],
+                                  ).show();
+                                  setState(() {
+                                    if(favorite == '1'){
+                                      favorite = '0';
+
+                                    }else{
+                                      favorite = '1';
+
+                                    }
+                                  });
+                                }
+                              },
+                              child: Container(
+                                child:
+                                Image.asset('assets/icons/wish-red-icon.png'),
+                              ),
+                            ),
+                          ),
+                        ):  Container(
+                          child: Positioned(
+                            top: 10,
+                            left: 15,
+                            child: GestureDetector(
+                              onTap: ()async{
+                                dynamic token = await _api.get_token();
+                                if(token == null){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()),
+                                  );
+                                }
+                                dynamic data = await _api.add_to_favorite(widget!.id.toString());
+                                if(data['status'] == true){
+
+                                  Alert(
+                                    context: context,
+                                    type: AlertType.success,
+                                    title: "",
+                                    desc:data['response_message']!,
+                                    buttons: [
+                                      DialogButton(
+                                        child: Text(
+                                          'متابعة',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                        width: 120,
+                                      )
+                                    ],
+                                  ).show();
+                                  setState(() {
+                                    if(favorite == '1'){
+                                      favorite = '0';
+
+                                    }else{
+                                      favorite = '1';
+
+                                    }
+                                  });
+                                }
+
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                child: Image.asset('assets/icons/wish-icon.png'),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     )),
               );
@@ -826,6 +1060,9 @@ class ProductSlider extends StatelessWidget {
         }).toList());
   }
 }
+
+
+
 
 class DropItem {
   late String key;

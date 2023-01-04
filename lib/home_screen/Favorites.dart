@@ -132,7 +132,7 @@ class _FavoritesState extends State<Favorites> with TickerProviderStateMixin {
                                         MaterialPageRoute(
                                             builder: (context) => ProductDetails(
                                               animationController: widget.animationController,
-                                              id: e["id"],config: config,
+                                              id: e["id"].toString(),config: config,
                                             )),
                                       );
                                     }

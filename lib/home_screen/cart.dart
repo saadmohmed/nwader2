@@ -122,6 +122,8 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
     future: _api.get_user_cart(),
     builder: (context, snapshot) {
     dynamic data = snapshot.data;
+    print('ddsdsadasd');
+    print(data);
     if(snapshot.hasData){
       return Stack(
         children: <Widget>[
@@ -380,9 +382,10 @@ class _CartProductBodyState extends State<CartProductBody> {
                                 //   context,
                                 //   MaterialPageRoute(builder: (context) => Cart()),
                                 // );
-                                setState(() {
-                                  widget.data;
-                                });
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Cart()),
+                                );
                               },
 
                               child: Text(
@@ -457,7 +460,7 @@ class _CartProductBodyState extends State<CartProductBody> {
                     Row(
                       children: [
                         Text(
-                          "مذبوح",
+                        widget.data["is_slaughtered"] == 'true' ?  "مذبوح" : "حي",
                           style: GoogleFonts.getFont(
                             AppTheme.fontName,
                             textStyle: TextStyle(
@@ -470,7 +473,7 @@ class _CartProductBodyState extends State<CartProductBody> {
                         ),
                         SizedBox(width: 50,),
                         Text(
-                          "التقطيع ارباع ",
+                          "التقطيع ${widget.data["cut_name"]} ",
                           style: GoogleFonts.getFont(
                             AppTheme.fontName,
                             textStyle: TextStyle(
@@ -485,21 +488,24 @@ class _CartProductBodyState extends State<CartProductBody> {
                     ),
                     Row(
                       children: [
+                        // Text(
+                        //   // "مع التغليف",
+                        //   "",
+                        //   style: GoogleFonts.getFont(
+                        //     AppTheme.fontName,
+                        //     textStyle: TextStyle(
+                        //       fontFamily: AppTheme.fontName,
+                        //       fontWeight: FontWeight.w700,
+                        //       fontSize: 12,
+                        //       color: AppTheme.darkerText,
+                        //     ),
+                        //    ),
+                        // ),
+                        // SizedBox(width: 50,),
                         Text(
-                          "مع التغليف",
-                          style: GoogleFonts.getFont(
-                            AppTheme.fontName,
-                            textStyle: TextStyle(
-                              fontFamily: AppTheme.fontName,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              color: AppTheme.darkerText,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 50,),
-                        Text(
-                          " مسلوخ ",
+
+                          widget.data["cover_type_id"] == 1 ?  "مسلوخ" : "مشلوط",
+
                           style: GoogleFonts.getFont(
                             AppTheme.fontName,
                             textStyle: TextStyle(
@@ -530,9 +536,10 @@ class _CartProductBodyState extends State<CartProductBody> {
                             value: quantity,
                             onChanged: (quantity) async {
                               await  _api.add_to_cart(widget.data["id"].toString(), widget.data["is_slaughtered"].toString(),widget.data["cover_type_id"].toString() ,widget.data["cut_type_id"].toString() ,quantity,widget.data["product_variant_id"].toString() );
-                              setState(() {
-
-                              });
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => Cart()),
+                              );
                             },
                           ),
                         ),

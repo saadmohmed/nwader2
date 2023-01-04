@@ -324,19 +324,19 @@ class _OrderDetailsState extends State<OrderDetails>
                               ),
                               child: GestureDetector(
                                 onTap: ()async{
-                                  print('llll' +widget.order.toString());
-                                  if(widget.order['address']['lat'] > 0 && widget.order['address']['lng']  > 0){
-                                    Location location = Location();
-                                    location.getLocation().then((location){
-
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] , widget.order['address']['lng']),)),
-                                      );
-                                    });
-
-                                  }
+                                  // print('llll' +widget.order.toString());
+                                  // if(widget.order['address']['lat'] > 0 && widget.order['address']['lng']  > 0){
+                                  //   Location location = Location();
+                                  //   location.getLocation().then((location){
+                                  //
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] , widget.order['address']['lng']),)),
+                                  //     );
+                                  //   });
+                                  //
+                                  // }
 
                                 },
                                 child: Padding(
