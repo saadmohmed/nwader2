@@ -698,24 +698,54 @@ class _ProductDetailsState extends State<ProductDetails>
                                               _selectedValue?.key.toString());
                                           if (p['status'] == true) {
                                             Alert(
+
+                                              style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                                AppTheme.fontName,
+                                                textStyle: TextStyle(
+                                                  fontFamily: AppTheme.fontName,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                  letterSpacing: 0.5,
+                                                  color: AppTheme.orange,
+                                                ),
+                                              ) , descStyle: GoogleFonts.getFont(
+                                                AppTheme.fontName,
+                                                textStyle: TextStyle(
+                                                  fontFamily: AppTheme.fontName,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                  letterSpacing: 0.5,
+                                                  color: AppTheme.darkerText,
+                                                ),
+                                              ),),
+
+
                                               context: context,
                                               type: AlertType.success,
                                               title: "",
-                                              desc: p['response_message']!,
+                                              desc: p['response_message'],
                                               buttons: [
                                                 DialogButton(
+                                                  color:AppTheme.green,
                                                   child: Text(
-                                                    'متابعة',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20),
+                                                    "متابعة",
+                                                    style:GoogleFonts.getFont(
+                                                      AppTheme.fontName,
+                                                      textStyle: TextStyle(
+                                                        fontFamily: AppTheme.fontName,
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 14,
+                                                        letterSpacing: 0.5,
+                                                        color: AppTheme.white,
+                                                      ),
+                                                    ),
                                                   ),
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
+                                                  onPressed: () => Navigator.pop(context),
                                                   width: 120,
                                                 )
                                               ],
                                             ).show();
+
                                           }
                                         },
                                         child: Text(
@@ -874,24 +904,55 @@ print(widget.isFav);
                                 }
                                 dynamic data = await _api.add_to_favorite(widget!.id.toString());
                                 if(data['status'] == true){
-
                                   Alert(
+
+                                    style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.orange,
+                                      ),
+                                    ) , descStyle: GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.darkerText,
+                                      ),
+                                    ),),
+
+
                                     context: context,
                                     type: AlertType.success,
                                     title: "",
-                                    desc:data['response_message']!,
+                                    desc: data['response_message'],
                                     buttons: [
                                       DialogButton(
+                                        color:AppTheme.green,
                                         child: Text(
-                                          'متابعة',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 20),
+                                          "متابعة",
+                                          style:GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              color: AppTheme.white,
+                                            ),
+                                          ),
                                         ),
                                         onPressed: () => Navigator.pop(context),
                                         width: 120,
                                       )
                                     ],
                                   ).show();
+
                                   setState(() {
                                     if(favorite == '1'){
                                       favorite = '0';
@@ -928,16 +989,47 @@ print(widget.isFav);
                                 if(data['status'] == true){
 
                                   Alert(
+
+                                    style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.orange,
+                                      ),
+                                    ) , descStyle: GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.darkerText,
+                                      ),
+                                    ),),
+
+
                                     context: context,
                                     type: AlertType.success,
                                     title: "",
-                                    desc:data['response_message']!,
+                                    desc: data['response_message'],
                                     buttons: [
                                       DialogButton(
+                                        color:AppTheme.green,
                                         child: Text(
-                                          'متابعة',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 20),
+                                          "متابعة",
+                                          style:GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              color: AppTheme.white,
+                                            ),
+                                          ),
                                         ),
                                         onPressed: () => Navigator.pop(context),
                                         width: 120,
@@ -981,16 +1073,47 @@ print(widget.isFav);
                                 if(data['status'] == true){
 
                                   Alert(
+
+                                    style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.orange,
+                                      ),
+                                    ) , descStyle: GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.darkerText,
+                                      ),
+                                    ),),
+
+
                                     context: context,
                                     type: AlertType.success,
                                     title: "",
-                                    desc:data['response_message']!,
+                                    desc: data['response_message'],
                                     buttons: [
                                       DialogButton(
+                                        color:AppTheme.green,
                                         child: Text(
-                                          'متابعة',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 20),
+                                          "متابعة",
+                                          style:GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              color: AppTheme.white,
+                                            ),
+                                          ),
                                         ),
                                         onPressed: () => Navigator.pop(context),
                                         width: 120,
@@ -1032,16 +1155,47 @@ print(widget.isFav);
                                 if(data['status'] == true){
 
                                   Alert(
+
+                                    style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.orange,
+                                      ),
+                                    ) , descStyle: GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.darkerText,
+                                      ),
+                                    ),),
+
+
                                     context: context,
                                     type: AlertType.success,
                                     title: "",
-                                    desc:data['response_message']!,
+                                    desc: data['response_message'],
                                     buttons: [
                                       DialogButton(
+                                        color:AppTheme.green,
                                         child: Text(
-                                          'متابعة',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 20),
+                                          "متابعة",
+                                          style:GoogleFonts.getFont(
+                                            AppTheme.fontName,
+                                            textStyle: TextStyle(
+                                              fontFamily: AppTheme.fontName,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              color: AppTheme.white,
+                                            ),
+                                          ),
                                         ),
                                         onPressed: () => Navigator.pop(context),
                                         width: 120,

@@ -384,16 +384,47 @@ class _MealsViewState extends State<MealsView> {
                           if(data['status'] == true){
 
                             Alert(
+
+                              style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.orange,
+                                ),
+                              ) , descStyle: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.darkerText,
+                                ),
+                              ),),
+
+
                               context: context,
                               type: AlertType.success,
                               title: "",
-                              desc:data['response_message']!,
+                              desc: data['response_message'],
                               buttons: [
                                 DialogButton(
+                                  color:AppTheme.green,
                                   child: Text(
-                                    'متابعة',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    "متابعة",
+                                    style:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.white,
+                                      ),
+                                    ),
                                   ),
                                   onPressed: () => Navigator.pop(context),
                                   width: 120,
@@ -440,24 +471,55 @@ class _MealsViewState extends State<MealsView> {
                           }
                           dynamic data = await _api.add_to_favorite(widget.mealsListData!.id.toString());
                           if(data['status'] == true){
-
                             Alert(
+
+                              style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.orange,
+                                ),
+                              ) , descStyle: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.darkerText,
+                                ),
+                              ),),
+
+
                               context: context,
                               type: AlertType.success,
                               title: "",
-                              desc:data['response_message']!,
+                              desc: data['response_message'],
                               buttons: [
                                 DialogButton(
+                                  color:AppTheme.green,
                                   child: Text(
-                                    'متابعة',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    "متابعة",
+                                    style:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.white,
+                                      ),
+                                    ),
                                   ),
                                   onPressed: () => Navigator.pop(context),
                                   width: 120,
                                 )
                               ],
                             ).show();
+
                             setState(() {
                               if(favorite == '1'){
                                 favorite = '0';
@@ -495,16 +557,47 @@ class _MealsViewState extends State<MealsView> {
                           if(data['status'] == true){
 
                             Alert(
+
+                              style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.orange,
+                                ),
+                              ) , descStyle: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.darkerText,
+                                ),
+                              ),),
+
+
                               context: context,
                               type: AlertType.success,
                               title: "",
-                              desc:data['response_message']!,
+                              desc: data['response_message'],
                               buttons: [
                                 DialogButton(
+                                  color:AppTheme.green,
                                   child: Text(
-                                    'متابعة',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    "متابعة",
+                                    style:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.white,
+                                      ),
+                                    ),
                                   ),
                                   onPressed: () => Navigator.pop(context),
                                   width: 120,
@@ -548,16 +641,47 @@ class _MealsViewState extends State<MealsView> {
                           if(data['status'] == true){
 
                             Alert(
+
+                              style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.orange,
+                                ),
+                              ) , descStyle: GoogleFonts.getFont(
+                                AppTheme.fontName,
+                                textStyle: TextStyle(
+                                  fontFamily: AppTheme.fontName,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  letterSpacing: 0.5,
+                                  color: AppTheme.darkerText,
+                                ),
+                              ),),
+
+
                               context: context,
                               type: AlertType.success,
                               title: "",
-                              desc:data['response_message']!,
+                              desc: data['response_message'],
                               buttons: [
                                 DialogButton(
+                                  color:AppTheme.green,
                                   child: Text(
-                                    'متابعة',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    "متابعة",
+                                    style:GoogleFonts.getFont(
+                                      AppTheme.fontName,
+                                      textStyle: TextStyle(
+                                        fontFamily: AppTheme.fontName,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14,
+                                        letterSpacing: 0.5,
+                                        color: AppTheme.white,
+                                      ),
+                                    ),
                                   ),
                                   onPressed: () => Navigator.pop(context),
                                   width: 120,

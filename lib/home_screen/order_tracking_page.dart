@@ -54,7 +54,7 @@ if(result.points.isNotEmpty){
         backgroundColor: AppTheme.white,
         centerTitle: true,
         title: Text(
-          'مراقية الطلب',
+          'مراقبة الطلب',
           style: GoogleFonts.getFont(
             AppTheme.fontName,
             textStyle: TextStyle(

@@ -90,7 +90,7 @@ listViews.add(SizedBox(height: 40,));
                   data.length,
                   (index) => Column(
                         children: [
-                          TitleView(
+                          data[index]['products'].length > 0 ?      TitleView(
                             id :      data[index]['cat']['id'] ,
                             titleTxt: '${data[index]['cat']['name']}',
                             subTxt: 'عرض الكل',
@@ -100,8 +100,8 @@ listViews.add(SizedBox(height: 40,));
                                     curve: Interval((1 / count) * 2, 1.0,
                                         curve: Curves.fastOutSlowIn))),
                             animationController: animationController!,
-                          ),
-                          MealsListView(
+                          ) :SizedBox(),
+                          data[index]['products'].length > 0 ?  MealsListView(
                             mealslist: List.generate(
                                 data[index]['products'].length,
                                 (index1) => MealsListData(
@@ -130,7 +130,7 @@ listViews.add(SizedBox(height: 40,));
                                             curve: Curves.fastOutSlowIn))),
                             mainScreenAnimationController:
                                animationController,
-                          )
+                          ) : SizedBox()
                         ],
                       )),
             );

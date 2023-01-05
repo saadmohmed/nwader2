@@ -127,7 +127,17 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
     if(snapshot.hasData){
       return Stack(
         children: <Widget>[
-          data['products'].length > 0 ? getMainListViewUI(data) : Center(child:Text('السلة فارغة')),
+          data['products'].length > 0 ? getMainListViewUI(data) : Center(child:Text('السلة فارغة' , style: GoogleFonts.getFont(
+            AppTheme.fontName,
+            textStyle: TextStyle(
+              fontFamily:
+              AppTheme.fontName,
+              fontWeight:
+              FontWeight.w300,
+              fontSize: 20,
+              color: AppTheme.darkerText,
+            ),
+          ),)),
 
           data['products'].length > 0 ?   Positioned(
               bottom: 55,
@@ -364,7 +374,7 @@ class _CartProductBodyState extends State<CartProductBody> {
                             BASE_URL+'/uploads/${widget.data["image"]}')),
                     SizedBox(height: 10,),
                     Container(
-                        width: 100,
+                        width: MediaQuery.of(context).size.width/4.2,
                         height: 35,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(

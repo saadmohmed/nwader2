@@ -242,7 +242,7 @@ class _OrderDetailsState extends State<OrderDetails>
                         Row(
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width/4,
+                              width: MediaQuery.of(context).size.width/3,
                               child: Text("الجوال : ",   style: GoogleFonts.getFont(
                                 AppTheme.fontName,
                                 textStyle: TextStyle(
@@ -269,24 +269,24 @@ class _OrderDetailsState extends State<OrderDetails>
                             ),
 
                             SizedBox(width: MediaQuery.of(context).size.width/4,),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: AppTheme.green,
-                              ),
-                              child: GestureDetector(
-                                onTap: ()async{
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => OrderDetails()),
-                                  // );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(child: Icon(Icons.phone ,color: AppTheme.white,)),
-                                ),
-                              ),
-                            )
+                            // Container(
+                            //   decoration: const BoxDecoration(
+                            //     color: AppTheme.green,
+                            //   ),
+                            //   child: GestureDetector(
+                            //     onTap: ()async{
+                            //       // Navigator.push(
+                            //       //   context,
+                            //       //   MaterialPageRoute(
+                            //       //       builder: (context) => OrderDetails()),
+                            //       // );
+                            //     },
+                            //     child: Padding(
+                            //       padding: const EdgeInsets.all(8.0),
+                            //       child: Center(child: Icon(Icons.phone ,color: AppTheme.white,)),
+                            //     ),
+                            //   ),
+                            // )
 
                           ],
                         ),

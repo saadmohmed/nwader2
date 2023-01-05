@@ -406,7 +406,7 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
                                 children: [
                                   Image.asset('assets/icons/debit-card.png'),
                                   SizedBox(
-                                    width: 10,
+                                    width: MediaQuery.of(context).size.width/30,
                                   ),
                                   Text(
                                     "طريقة الدفع",

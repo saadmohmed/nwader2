@@ -227,65 +227,65 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                             height: 10,
                                           ),
                                           emailTextField(data['email'] == null ? '' : data['email']),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              children: [
-                                                Radio<String>(
-                                                    value: 'ar',
-                                                    groupValue: payment_method,
-                                                    // TRY THIS: Try setting the toggleable value to false and
-                                                    // see how that changes the behavior of the widget.
-                                                    toggleable: true,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        payment_method = value;
-                                                      });
-                                                    }),
-                                                Text(
-                                                  'عربي',
-                                                  style: GoogleFonts.getFont(
-                                                    AppTheme.fontName,
-                                                    textStyle: TextStyle(
-                                                      fontFamily:
-                                                      AppTheme.fontName,
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 14,
-                                                      color: AppTheme.darkText,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Radio<String>(
-                                                    value: 'en',
-                                                    groupValue: payment_method,
-                                                    // TRY THIS: Try setting the toggleable value to false and
-                                                    // see how that changes the behavior of the widget.
-                                                    toggleable: true,
-                                                    onChanged: (String? value) {
-                                                      setState(() {
-                                                        payment_method = value;
-                                                      });
-                                                    }),
-                                                Text(
-                                                  'English',
-                                                  style: GoogleFonts.getFont(
-                                                    AppTheme.fontName,
-                                                    textStyle: TextStyle(
-                                                      fontFamily:
-                                                      AppTheme.fontName,
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 14,
-                                                      color: AppTheme.darkText,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          // SizedBox(
+                                          //   height: 10,
+                                          // ),
+                                          //
+                                          // Padding(
+                                          //   padding: const EdgeInsets.all(8.0),
+                                          //   child: Row(
+                                          //     children: [
+                                          //       Radio<String>(
+                                          //           value: 'ar',
+                                          //           groupValue: payment_method,
+                                          //           // TRY THIS: Try setting the toggleable value to false and
+                                          //           // see how that changes the behavior of the widget.
+                                          //           toggleable: true,
+                                          //           onChanged: (String? value) {
+                                          //             setState(() {
+                                          //               payment_method = value;
+                                          //             });
+                                          //           }),
+                                          //       Text(
+                                          //         'عربي',
+                                          //         style: GoogleFonts.getFont(
+                                          //           AppTheme.fontName,
+                                          //           textStyle: TextStyle(
+                                          //             fontFamily:
+                                          //             AppTheme.fontName,
+                                          //             fontWeight: FontWeight.w700,
+                                          //             fontSize: 14,
+                                          //             color: AppTheme.darkText,
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       Radio<String>(
+                                          //           value: 'en',
+                                          //           groupValue: payment_method,
+                                          //           // TRY THIS: Try setting the toggleable value to false and
+                                          //           // see how that changes the behavior of the widget.
+                                          //           toggleable: true,
+                                          //           onChanged: (String? value) {
+                                          //             setState(() {
+                                          //               payment_method = value;
+                                          //             });
+                                          //           }),
+                                          //       Text(
+                                          //         'English',
+                                          //         style: GoogleFonts.getFont(
+                                          //           AppTheme.fontName,
+                                          //           textStyle: TextStyle(
+                                          //             fontFamily:
+                                          //             AppTheme.fontName,
+                                          //             fontWeight: FontWeight.w700,
+                                          //             fontSize: 14,
+                                          //             color: AppTheme.darkText,
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -306,40 +306,104 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       await storage.write(
           key: 'mobile', value: data['mobile'].toString());
       Alert(
+
+        style: AlertStyle(titleStyle:GoogleFonts.getFont(
+          AppTheme.fontName,
+          textStyle: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            letterSpacing: 0.5,
+            color: AppTheme.orange,
+          ),
+        ) , descStyle: GoogleFonts.getFont(
+          AppTheme.fontName,
+          textStyle: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            letterSpacing: 0.5,
+            color: AppTheme.darkerText,
+          ),
+        ),),
+
+
         context: context,
         type: AlertType.success,
-        title: data['response_message'].toString(),
-        desc: "",
+        title: "",
+        desc: update_Data['response_message'],
         buttons: [
           DialogButton(
+            color:AppTheme.green,
             child: Text(
               "متابعة",
-              style: TextStyle(
-                  color: Colors.white, fontSize: 20),
+              style:GoogleFonts.getFont(
+                AppTheme.fontName,
+                textStyle: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  letterSpacing: 0.5,
+                  color: AppTheme.white,
+                ),
+              ),
             ),
             onPressed: () => Navigator.pop(context),
             width: 120,
           )
         ],
       ).show();
+
     }else{
       Alert(
+
+        style: AlertStyle(titleStyle:GoogleFonts.getFont(
+          AppTheme.fontName,
+          textStyle: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            letterSpacing: 0.5,
+            color: AppTheme.orange,
+          ),
+        ) , descStyle: GoogleFonts.getFont(
+          AppTheme.fontName,
+          textStyle: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+            letterSpacing: 0.5,
+            color: AppTheme.darkerText,
+          ),
+        ),),
+
+
         context: context,
         type: AlertType.success,
-        title: data['response_message'].toString(),
-        desc: "",
+        title: "",
+        desc: data['response_message'],
         buttons: [
           DialogButton(
+            color:AppTheme.green,
             child: Text(
               "متابعة",
-              style: TextStyle(
-                  color: Colors.white, fontSize: 20),
+              style:GoogleFonts.getFont(
+                AppTheme.fontName,
+                textStyle: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  letterSpacing: 0.5,
+                  color: AppTheme.white,
+                ),
+              ),
             ),
             onPressed: () => Navigator.pop(context),
             width: 120,
           )
         ],
       ).show();
+
     }
                                             },
                                             child: Row(
@@ -408,41 +472,104 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                                 password.text = '';
                                                 old_password.text = '';
                                                 Alert(
+
+                                                  style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                                    AppTheme.fontName,
+                                                    textStyle: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14,
+                                                      letterSpacing: 0.5,
+                                                      color: AppTheme.orange,
+                                                    ),
+                                                  ) , descStyle: GoogleFonts.getFont(
+                                                    AppTheme.fontName,
+                                                    textStyle: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14,
+                                                      letterSpacing: 0.5,
+                                                      color: AppTheme.darkerText,
+                                                    ),
+                                                  ),),
+
+
                                                   context: context,
                                                   type: AlertType.success,
-                                                  title: update_Data['response_message'].toString(),
-                                                  desc: "",
+                                                  title: "",
+                                                  desc: data['response_message'],
                                                   buttons: [
                                                     DialogButton(
+                                                      color:AppTheme.green,
                                                       child: Text(
                                                         "متابعة",
-                                                        style: TextStyle(
-                                                            color: Colors.white, fontSize: 20),
+                                                        style:GoogleFonts.getFont(
+                                                          AppTheme.fontName,
+                                                          textStyle: TextStyle(
+                                                            fontFamily: AppTheme.fontName,
+                                                            fontWeight: FontWeight.w700,
+                                                            fontSize: 14,
+                                                            letterSpacing: 0.5,
+                                                            color: AppTheme.white,
+                                                          ),
+                                                        ),
                                                       ),
                                                       onPressed: () => Navigator.pop(context),
                                                       width: 120,
                                                     )
                                                   ],
                                                 ).show();
-                                              }else{
 
+                                              }else{
                                                 Alert(
+
+                                                  style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                                                    AppTheme.fontName,
+                                                    textStyle: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14,
+                                                      letterSpacing: 0.5,
+                                                      color: AppTheme.orange,
+                                                    ),
+                                                  ) , descStyle: GoogleFonts.getFont(
+                                                    AppTheme.fontName,
+                                                    textStyle: TextStyle(
+                                                      fontFamily: AppTheme.fontName,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14,
+                                                      letterSpacing: 0.5,
+                                                      color: AppTheme.darkerText,
+                                                    ),
+                                                  ),),
+
+
                                                   context: context,
                                                   type: AlertType.error,
-                                                  title: update_Data['response_message'].toString(),
-                                                  desc: "",
+                                                  title: "",
+                                                  desc: update_Data['response_message'],
                                                   buttons: [
                                                     DialogButton(
+                                                      color:AppTheme.green,
                                                       child: Text(
                                                         "متابعة",
-                                                        style: TextStyle(
-                                                            color: Colors.white, fontSize: 20),
+                                                        style:GoogleFonts.getFont(
+                                                          AppTheme.fontName,
+                                                          textStyle: TextStyle(
+                                                            fontFamily: AppTheme.fontName,
+                                                            fontWeight: FontWeight.w700,
+                                                            fontSize: 14,
+                                                            letterSpacing: 0.5,
+                                                            color: AppTheme.white,
+                                                          ),
+                                                        ),
                                                       ),
                                                       onPressed: () => Navigator.pop(context),
                                                       width: 120,
                                                     )
                                                   ],
                                                 ).show();
+
                                               }
                                             },
                                             child: Row(
@@ -582,21 +709,21 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                             data.length,
                                             (index) => Row(
                                               children: [
-                                                Flexible(
-                                                  child: Radio<String>(
-                                                      value:
-                                                          '${data[index]["id"]}',
-                                                      groupValue: address,
-                                                      // TRY THIS: Try setting the toggleable value to false and
-                                                      // see how that changes the behavior of the widget.
-                                                      toggleable: true,
-                                                      onChanged:
-                                                          (String? value) {
-                                                        setState(() {
-                                                          address = value;
-                                                        });
-                                                      }),
-                                                ),
+                                                // Flexible(
+                                                //   child: Radio<String>(
+                                                //       value:
+                                                //           '${data[index]["id"]}',
+                                                //       groupValue: address,
+                                                //       // TRY THIS: Try setting the toggleable value to false and
+                                                //       // see how that changes the behavior of the widget.
+                                                //       toggleable: true,
+                                                //       onChanged:
+                                                //           (String? value) {
+                                                //         setState(() {
+                                                //           address = value;
+                                                //         });
+                                                //       }),
+                                                // ),
                                                 Flexible(
                                                     child: Column(
                                                   children: [

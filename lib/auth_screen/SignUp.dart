@@ -238,13 +238,56 @@ class _SignUpState extends State<SignUp> {
 
                         final storage = new FlutterSecureStorage();
                         if (_loginData['status'] == true) {
+
                           Alert(
+
+                            style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                letterSpacing: 0.5,
+                                color: AppTheme.orange,
+                              ),
+                            ) , descStyle: GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                letterSpacing: 0.5,
+                                color: AppTheme.darkerText,
+                              ),
+                            ),),
+
+
                             context: context,
                             type: AlertType.success,
-                            title: _loginData['response_message'],
-                            desc: "",
-                            buttons: [],
+                            title: "",
+                            desc: _loginData['response_message'],
+                            buttons: [
+                              DialogButton(
+                                color:AppTheme.green,
+                                child: Text(
+                                  "متابعة",
+                                  style:GoogleFonts.getFont(
+                                    AppTheme.fontName,
+                                    textStyle: TextStyle(
+                                      fontFamily: AppTheme.fontName,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                      letterSpacing: 0.5,
+                                      color: AppTheme.white,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                                width: 120,
+                              )
+                            ],
                           ).show();
+
                           dynamic data = _loginData['user_data'];
                           await storage.write(key: 'name', value: data['name']);
                           await storage.write(
@@ -313,16 +356,47 @@ class _SignUpState extends State<SignUp> {
                             }
                           });
                           Alert(
+
+                            style: AlertStyle(titleStyle:GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                letterSpacing: 0.5,
+                                color: AppTheme.orange,
+                              ),
+                            ) , descStyle: GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                letterSpacing: 0.5,
+                                color: AppTheme.darkerText,
+                              ),
+                            ),),
+
+
                             context: context,
                             type: AlertType.error,
-                            title: _loginData['response_message'],
-                            desc: "",
+                            title: "خطأ",
+                            desc: _loginData['response_message'],
                             buttons: [
                               DialogButton(
+                                color:AppTheme.green,
                                 child: Text(
                                   "متابعة",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                  style:GoogleFonts.getFont(
+                                    AppTheme.fontName,
+                                    textStyle: TextStyle(
+                                      fontFamily: AppTheme.fontName,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                      letterSpacing: 0.5,
+                                      color: AppTheme.white,
+                                    ),
+                                  ),
                                 ),
                                 onPressed: () => Navigator.pop(context),
                                 width: 120,
