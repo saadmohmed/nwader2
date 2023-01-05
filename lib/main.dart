@@ -61,7 +61,7 @@ ApiProvider _api = new ApiProvider();
   });
 
   FirebaseMessaging.onBackgroundMessage((message) async{
-    // print(message.data);
+    print(message.data);
 
   });
 

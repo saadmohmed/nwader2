@@ -7,8 +7,10 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
 import 'package:nwader/app_theme.dart';
 class OrderTrackingPage extends StatefulWidget {
-  const OrderTrackingPage({Key? key , required this.latlng}) : super(key: key);
+  const OrderTrackingPage({Key? key , required this.latlng , required this.dlatlng}) : super(key: key);
   final LatLng latlng ;
+  final LatLng dlatlng ;
+
   @override
   State<OrderTrackingPage> createState() => _OrderTrackingPageState();
 }
@@ -20,28 +22,10 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
 
-  void getCurrentLocation()async{
-    Location location = Location();
-    location.getLocation().then((location){
-      currentLocation = location;
-    });
-    GoogleMapController googleaMapController = await _controller.future;
-
-    location.onLocationChanged.listen((event) {
-      currentLocation = event;
-      googleaMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(zoom:13.5,target: LatLng(event.latitude!,event.longitude!))));
-      sourceLocation = LatLng(event.latitude!,event.longitude!);
-      polylineCoordinates.clear();
-      getPolyPoints();
-      setState(() {
-
-      });
-    });
-  }
 void getPolyPoints() async {
   PolylinePoints polyLinePoints = PolylinePoints();
   PolylineResult result = await polyLinePoints.getRouteBetweenCoordinates('AIzaSyCWNY4Dvhl7BNyihg4BvQK6pkILcQe91zw',
-      PointLatLng(sourceLocation.latitude, sourceLocation.longitude), PointLatLng(widget.latlng.latitude, widget.latlng.longitude));
+      PointLatLng(widget.dlatlng.latitude, widget.dlatlng.longitude), PointLatLng(widget.latlng.latitude, widget.latlng.longitude));
 if(result.points.isNotEmpty){
   result.points.forEach(
           (PointLatLng point) => polylineCoordinates.add(
@@ -56,7 +40,6 @@ if(result.points.isNotEmpty){
 @override
   void initState() {
     // TODO: implement initState
-  getCurrentLocation();
   getPolyPoints();
     super.initState();
   }
@@ -107,8 +90,8 @@ if(result.points.isNotEmpty){
 
         ],
       ),
-      body:currentLocation == null ?Text("Loading") : GoogleMap(
-        initialCameraPosition: CameraPosition(target:LatLng(currentLocation!.latitude! , currentLocation!.longitude!) ,zoom: 13.5),
+      body:GoogleMap(
+        initialCameraPosition: CameraPosition(target:LatLng(widget.dlatlng!.latitude! , widget.dlatlng!.longitude!) ,zoom: 13.5),
         polylines: {
         Polyline(polylineId: PolylineId("route"),
         points: polylineCoordinates,
@@ -119,11 +102,11 @@ if(result.points.isNotEmpty){
         markers: {
            Marker(
               markerId: MarkerId("source"),
-              position: LatLng(currentLocation!.latitude! , currentLocation!.longitude!),
+              position: LatLng(widget.dlatlng!.latitude! , widget.dlatlng!.longitude!),
           ),
           Marker(
             markerId: MarkerId("source"),
-            position: sourceLocation
+            position: LatLng(widget.latlng!.latitude! , widget.latlng!.longitude!),
           ),
           Marker(
               markerId: MarkerId("destination"),

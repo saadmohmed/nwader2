@@ -318,25 +318,27 @@ class _OrderDetailsState extends State<OrderDetails>
 
 
                             SizedBox(width: MediaQuery.of(context).size.width/12,),
-                            Container(
+                         widget.order['status_id']  == 4 ?   Container(
                               decoration: const BoxDecoration(
                                 color: AppTheme.orange,
                               ),
                               child: GestureDetector(
                                 onTap: ()async{
-                                  // print('llll' +widget.order.toString());
-                                  // if(widget.order['address']['lat'] > 0 && widget.order['address']['lng']  > 0){
-                                  //   Location location = Location();
-                                  //   location.getLocation().then((location){
-                                  //
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] , widget.order['address']['lng']),)),
-                                  //     );
-                                  //   });
-                                  //
-                                  // }
+                                  print('llll' +widget.order.toString());
+                                  if(widget.order['address']['lat'] > 0 && widget.order['address']['lng']  > 0){
+
+                                dynamic driverLocation =await _api.getDriverLocation(widget.order['id'].toString());
+                                print(driverLocation);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] ,
+                                                widget.order['address']['lng']),
+                                              dlatlng: LatLng(driverLocation['location']['lat'] ,driverLocation['location']['lng']),)),
+                                      );
+
+
+                                  }
 
                                 },
                                 child: Padding(
@@ -344,7 +346,7 @@ class _OrderDetailsState extends State<OrderDetails>
                                   child: Center(child: Icon(Icons.location_on_outlined ,color: AppTheme.white,)),
                                 ),
                               ),
-                            )
+                            ) : SizedBox()
 
                           ],
                         ),

@@ -91,8 +91,7 @@ class ApiProvider {
     final user_id = await storage.read(
       key: 'id',
     );
-    print(user_id);
-    dynamic url =  Uri.parse('${GET_PRODUCTS}?product_id=' + id);
+    dynamic url =  Uri.parse('${PRODUCT_DATA}?product_id=' + id);
     if(user_id != null) {
       url = Uri.parse('${PRODUCT_DATA}?product_id=' + id + '&user_id='+user_id);
     }
@@ -105,7 +104,7 @@ class ApiProvider {
 
       },
     );
-
+print(json.decode(response.body));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
@@ -138,6 +137,25 @@ class ApiProvider {
       return null;
     }
     return null;
+  }
+  Future getDriverLocation(String id) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final http.Response response = await http.get(
+      Uri.parse('${GETDRIVERLOCATION}?order_id=' + id),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
+      },
+    );
+      final data = json.decode(response.body);
+        return data;
+
+
   }
   Future add_to_address( address_name ,area_id,gov_id , block , street  , build_number ,lat , lng , full_address ,flat) async {
     final storage = new FlutterSecureStorage();

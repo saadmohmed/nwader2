@@ -14,6 +14,7 @@ const ADD_ORDER = '${BASE_URL}/api/user/add_order';
 const GET_ORDERS = '${BASE_URL}/api/user/get_orders';
 
 const ORDERDETAILS = '${BASE_URL}/api/user/get_order_details';
+const GETDRIVERLOCATION = '${BASE_URL}/api/user/getDriverLastLocation';
 
 const CAT_WITH_PRODUCTS = '${BASE_URL}/api/user/get_categories_with_products';
 const CHECKCOUPON = '${BASE_URL}/api/checkcoupon';

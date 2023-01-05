@@ -111,9 +111,9 @@ class _ProductDetailsState extends State<ProductDetails>
             FutureBuilder(
                 future: _api.getProductData(widget.id),
                 builder: (context, snapshot) {
+
                   if (snapshot.hasData) {
                     dynamic data = snapshot.data;
-                    print(data);
 
                     List<Ad> ads = [];
                     List<DropItem> countryList = [];
@@ -297,15 +297,31 @@ class _ProductDetailsState extends State<ProductDetails>
                                               ),
                                             ),
                                           ),
-                                          QuantityInput(
-                                              inputWidth: 40,
-                                              value: quantity,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  quantity = int.parse(value
-                                                      .replaceAll(',', ''));
-                                                });
-                                              })
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                              color: AppTheme.green,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: QuantityInput(
+                                                  decoration: const InputDecoration(
+
+                                                    fillColor: AppTheme.white,
+                                                  ),
+                                                buttonColor: Colors.white,
+                                                  iconColor: AppTheme.orange,
+                                                  inputWidth: 40,
+                                                  value: quantity,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      quantity = int.parse(value
+                                                          .replaceAll(',', ''));
+                                                    });
+                                                  }),
+                                            ),
+                                          )
                                         ],
                                       ),
                                       Padding(
@@ -334,7 +350,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                   width: 70,
                                                   height: 40,
                                                   toggleSize: 45,
-                                                  inactiveColor: AppTheme.grey,
+                                                  inactiveColor: AppTheme.green,
                                                   activeColor: AppTheme.orange,
                                                   value: alive,
                                                   onToggle: (bool value) {
@@ -600,7 +616,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                             width: 80,
                                             height: 40,
                                             toggleSize: 45,
-                                            inactiveColor: AppTheme.grey,
+                                            inactiveColor: AppTheme.green,
                                             activeColor: AppTheme.orange,
                                             value: without_c,
                                             onToggle: (bool value) {
@@ -633,7 +649,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                     ),
                                   )),
                               Positioned(
-                                  top: 660,
+                                bottom: 0,
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 60,
