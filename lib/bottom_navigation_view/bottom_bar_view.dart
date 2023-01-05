@@ -135,7 +135,7 @@ class _BottomBarViewState extends State<BottomBarView>
         ),
         Padding(
           padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom+10),
           child: SizedBox(
             width: 40 * 2.0,
             height: 40 + 62.0,
@@ -146,7 +146,7 @@ class _BottomBarViewState extends State<BottomBarView>
                 width: 80 * 2.0,
                 height: 80 * 2.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: ScaleTransition(
                     alignment: Alignment.center,
                     scale: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -169,8 +169,9 @@ class _BottomBarViewState extends State<BottomBarView>
                           BoxShadow(
                               color: AppTheme.white
                                   ,
-                              offset: const Offset(0.0, 4.0),
-                              blurRadius: 3.0),
+                              spreadRadius: 3,
+                              offset: const Offset(0.0, 8.0),
+                              blurRadius: 1.0),
                         ],
                       ),
                       child: Material(
