@@ -283,6 +283,29 @@ print(json.decode(response.body));
     }
 
   }
+  Future contact_us(name , email , message , title) async {
+    final storage = new FlutterSecureStorage();
+
+
+      final http.Response response = await http.post(
+        Uri.parse('${CONTACT_US}'),
+        headers: <String, String>{
+          'Accept': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: {
+          'title':title,
+          'name': name,
+          'mobile' : email,
+          'details' : message,
+
+        },
+      );
+    final data = json.decode(response.body);
+    return data;
+
+
+  }
   Future getPage(page) async {
     final storage = new FlutterSecureStorage();
 

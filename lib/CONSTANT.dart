@@ -23,6 +23,7 @@ const PRODUCT_DATA = '${BASE_URL}/api/user/get_product_details';
 const GET_PRODUCTS = '${BASE_URL}/api/user/get_products';
 const GET_FAVORITES = '${BASE_URL}/api/user/get_user_favorite';
 
+const CONTACT_US = '${BASE_URL}/api/user/contact_us';
 
 const ADD_TO_FAVORITE = '${BASE_URL}/api/user/add_remove_fav';
 const ADD_TO_CART= '${BASE_URL}/api/user/add_remove_cart';
