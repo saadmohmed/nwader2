@@ -18,6 +18,8 @@ import '../model/Ad.dart';
 import 'add_address.dart';
 import 'package:async/async.dart';
 
+import 'edit_address.dart';
+
 class AddOrder extends StatefulWidget {
   final String total;
   const AddOrder(
@@ -318,7 +320,7 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
                                                               width: MediaQuery
                                                                   .of(context)
                                                                   .size
-                                                                  .width / 1.6,
+                                                                  .width / 1.5,
 
                                                               child: Flexible(
                                                                   child: Column(
@@ -329,6 +331,44 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
                                                                           '${data[index]["address_text"]} ')
                                                                     ],
                                                                   )),
+                                                            ),
+
+                                                            GestureDetector(
+                                                              onTap: () async {
+                                                                dynamic areas = await _api.getAreas();
+                                                                if(areas['status'] == true){
+                                                                  Navigator.pushReplacement(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (context) => EditAddress(lat: data[index]["lat"], govs: areas['govs'], lng: data[index]["lng"],
+                                                                          address: data[index]["address_name"],
+                                                                          flat: data[index]["flat"],
+                                                                          build_number: data[index]["build_number"],
+                                                                          block: data[index]["block"],
+                                                                          street: data[index]["street"],
+                                                                          fullAddress: data[index]["full_address"],
+                                                                          gov_id: data[index]["gov_id"],
+                                                                          area_id: data[index]["area_id"],
+                                                                          address_id: data[index]["id"],
+
+
+                                                                        )),
+                                                                  );
+                                                                }
+
+
+                                                              },
+                                                              child: SizedBox(
+                                                                width: MediaQuery
+                                                                    .of(context)
+                                                                    .size
+                                                                    .width / 14,
+
+                                                                child: Icon(
+                                                                  Icons.edit_note,
+                                                                  color: AppTheme
+                                                                      .green,),
+                                                              ),
                                                             ),
                                                             GestureDetector(
                                                               onTap: () async {
@@ -351,7 +391,7 @@ class _AddOrderState extends State<AddOrder> with TickerProviderStateMixin {
                                                                 width: MediaQuery
                                                                     .of(context)
                                                                     .size
-                                                                    .width / 5,
+                                                                    .width / 14,
 
                                                                 child: Icon(
                                                                   Icons.delete,

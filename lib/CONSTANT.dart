@@ -41,3 +41,4 @@ const GET_USER_ADDRESS = '${BASE_URL}/api/user/get_user_address';
 const DELETE_ADDRESS = '${BASE_URL}/api/user/delete_user_address';
 
 
+const EDIT_USER_ADDRESS = '${BASE_URL}/api/user/edit_user_address';

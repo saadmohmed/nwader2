@@ -157,6 +157,50 @@ print(json.decode(response.body));
 
 
   }
+  Future edit_to_address(address_id, address_name ,area_id,gov_id , block , street  , build_number ,lat , lng , full_address ,flat) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    final http.Response response = await http.post(
+      Uri.parse('${EDIT_USER_ADDRESS}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+      },
+      body: {
+        'address_id': address_id.toString(),
+
+        'address_name': address_name,
+        'area_id': area_id,
+        'gov_id': gov_id,
+        'block': block,
+        'street': street,
+        'build_number': build_number,
+        'lat': lat,
+        'lng': lng,
+        'full_address': full_address,
+        'flat': flat,
+
+        'user_id' : user_id
+      },
+    );
+    print('ddd');
+    print( json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == true) {
+        return data;
+      }
+      return null;
+    }
+    return null;
+  }
+
   Future add_to_address( address_name ,area_id,gov_id , block , street  , build_number ,lat , lng , full_address ,flat) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
@@ -217,6 +261,7 @@ print(json.decode(response.body));
         'user_id' : user_id
       },
     );
+
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == true) {
